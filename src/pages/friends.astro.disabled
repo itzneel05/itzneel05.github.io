@@ -1,0 +1,181 @@
+---
+
+import { getEntry, render } from "astro:content";
+import Markdown from "@components/misc/Markdown.astro";
+import I18nKey from "../i18n/i18nKey";
+import { i18n } from "../i18n/translation";
+import MainGridLayout from "../layouts/MainGridLayout.astro";
+
+const friendsPost = await getEntry("spec", "friends");
+
+if (!friendsPost) {
+	throw new Error("friends page content not found");
+}
+
+const { Content } = await render(friendsPost);
+const items = [
+	{
+        title:"Red的小屋",
+        imgurl:"https://redshome.top/17.jpg",
+        desc:"会长！心里最强的web✋",
+        siteurl:"https://redshome.top/",
+        tags:["CTF"],
+    },
+    {
+        title:"SkyAsh 的小窝",
+        imgurl:"https://blog.starchen.top/favicon.jpg",
+        desc:"在取证和大数据上奋力攀爬的咸鱼",
+        siteurl:"https://skyash.cn/",
+        tags:["取证"],
+    },
+    {
+        title:"ztr 的小窝",
+        imgurl:"https://cdn.luogu.com.cn/upload/usericon/602124.png",
+        desc:"记录 ztr 的学习与生活。",
+        siteurl:"https://ztrztr.top",
+        tags:["OI"],
+    },
+    {
+        title:"iyheart",
+        imgurl:"https://www.helloimg.com/i/2025/03/27/67e56a6483bcd.jpg",
+        desc:"分享学习历程与笔记",
+        siteurl:"https://iyheart.github.io",
+        tags:["CTF"],
+    },
+    {
+        title:"3a0-Eminem",
+        imgurl:"https://www.helloimg.com/i/2025/05/29/6837eea404ae5.jpg",
+        desc:"NepNep的师傅",
+        siteurl:"https://3a0.top",
+        tags:["CTF"],
+    },
+    {
+        title:"Snozzz",
+        imgurl:"https://snozzz.cc/IMG_0105.PNG",
+        desc:"南信大的好朋友",
+        siteurl:"https://snozzz.cc",
+        tags:["CTF"],
+    },
+    {
+        title:"Jason",
+        imgurl:"https://youke1.picui.cn/s1/2025/10/03/68df58b02ffc9.jpg",
+        desc:"Ja师傅",
+        siteurl:"https://www.jas0n.top",
+        tags:["CTF"],
+    },
+    {
+        title:"Expl0rer.Ct",
+        imgurl:"https://youke1.picui.cn/s1/2025/10/27/68ff91f484ae7.png",
+        desc:"吾将上下而求索",
+        siteurl:"https://expl0rer.top",
+        tags:["CTF"],
+    },
+    {
+        title:"n1tro",
+        imgurl:"https://youke1.picui.cn/s1/2025/10/27/68ff923e6101b.jpg",
+        desc:"一只菜狗取证手",
+        siteurl:"https://www.n1tro.site",
+        tags:["CTF"],
+    },
+    {
+        title:"mnzn",
+        imgurl:"https://gravatar.com/avatar/580f31d623958c3eac3b9bce516a8667",
+        desc:"山建学弟",
+        siteurl:"https://mnzn.me/",
+        tags:["CTF"],
+    },
+    {
+        title:"玫幽倩",
+        imgurl:"https://mei-you-qian.github.io/img/fufu.png",
+        desc:"希望大家都能越来越好",
+        siteurl:"https://mei-you-qian.github.io/",
+        tags:["CTF"],
+    },
+    {
+        title:"沉浮小窝",
+        imgurl:"https://youke1.picui.cn/s1/2025/10/27/68ff4aa898189.jpg",
+        desc:"代码江湖中的静谧角落:沉得住气,才浮得起来.",
+        siteurl:"https://blog.ichenfu.cn/",
+        tags:["CTF"],
+    },
+    {
+        title:"BR",
+        imgurl:"https://blog.yzbrh.top/img/avatar.jpg",
+        desc:"间歇性摸鱼，持续性摆烂",
+        siteurl:"https://blog.yzbrh.top",
+        tags:["CTF"],
+    },
+    {
+        title:"Q1uJu",
+        imgurl:"https://q1uju.cc/_astro/avatar.DdCmsPFl_wbYM7.webp",
+        desc:"HnuSec/Crypto",
+        siteurl:"https://q1uju.cc/",
+        tags:["CTF"],
+    },
+];
+
+function shuffleArray(array) {
+	const newArray = [...array];
+	for (let i = newArray.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+	}
+	return newArray;
+}
+
+const shuffledItems = shuffleArray(items);
+---
+<MainGridLayout title={i18n(I18nKey.friends)} description={i18n(I18nKey.friends)}>
+    <div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32">
+        <div class="card-base z-10 px-9 py-6 relative w-full ">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-8 my-4">
+                {shuffledItems.map((item) => (
+                    <div class="flex flex-col h-auto gap-4 rounded-[var(--radius-large)] border border-black/10 dark:border-white/10 p-4 bg-[var(--card-bg)] transition-all duration-300 hover:border-[var(--primary)] hover:shadow-lg group">
+                        <div class="flex items-start gap-4">
+                            <div class="w-16 h-16 flex-shrink-0 rounded-sm overflow-hidden border border-black/20 dark:border-white/20 group-hover:border-[var(--primary)] transition-colors">
+                                <img src={item.imgurl} alt="Avatar" class="w-full h-full object-cover">
+                            </div>
+                            <div class="grow">
+                                <div class="flex items-center justify-between mb-1">
+                                    <div class="font-bold font-mono text-lg text-[var(--primary)]">{item.title}</div>
+                                    <div class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20">
+                                        [ONLINE]
+                                    </div>
+                                </div>
+                                <div class="text-sm font-mono text-[var(--content-meta)] line-clamp-2 h-10 leading-relaxed">
+                                    <span class="text-[var(--primary)]/50 mr-1">$</span>{item.desc}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="w-full h-[1px] bg-black/5 dark:bg-white/5 group-hover:bg-[var(--primary)]/20 transition-colors"></div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div class="flex flex-wrap gap-2">
+                                {(item.tags && item.tags.length > 0) ? item.tags.map((tag) => (
+                                    <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[var(--btn-regular-bg)] text-[var(--content-meta)] border border-black/5 dark:border-white/5">
+                                        #{tag}
+                                    </span>
+                                )) : (
+                                    <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[var(--btn-regular-bg)] text-[var(--content-meta)] border border-black/5 dark:border-white/5">
+                                        #USER
+                                    </span>
+                                )}
+                            </div>
+                            <a href={item.siteurl} target="_blank" rel="noopener noreferrer" 
+                               class="text-xs font-mono font-bold text-[var(--primary)] hover:text-[var(--link-hover)] transition-colors flex items-center gap-1 group/link">
+                                [ VISIT ]
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-3 h-3 fill-current group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform">
+                                    <path d="M6.4 18L5 16.6L14.6 7H6V5H18V17H16V8.4L6.4 18Z" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                ))}
+            </div>
+            <Markdown class="mt-2">
+                <Content />
+            </Markdown>
+        </div>
+    </div>
+</MainGridLayout>
