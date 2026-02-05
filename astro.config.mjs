@@ -30,7 +30,7 @@ import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 export default defineConfig({
 	site: "https://itzneel05.github.io",
 
-	base: "/",
+	// base: "/",
 	trailingSlash: "always",
 	integrations: [
 		tailwind({
