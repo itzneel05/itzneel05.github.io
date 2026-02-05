@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 permissions:
   contents: read
@@ -11,28 +11,17 @@ permissions:
   id-token: write
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
+      - name: Install, build, and upload with Astro
+        uses: withastro/action@v3
+        # the action will build and create an artifact, but ensure we explicitly deploy below
 
-      - name: Install pnpm
-        run: corepack enable && corepack prepare pnpm@9.14.4 --activate
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Build site
-        run: pnpm run build
-
-      - name: Upload Pages artifact
+      - name: Upload Pages artifact (explicit)
         uses: actions/upload-pages-artifact@v1
         with:
           path: dist
