@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main] # Or 'master' depending on your default branch
 
 permissions:
   contents: read
@@ -15,10 +15,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
       - name: Install, build, and upload with Astro
         uses: withastro/action@v3
-        with:
-          path: . # The root of your repo
-          node-version: 20 # Ensures a stable version of Node.js
-          package-manager: pnpm@latest # Explicitly tells GitHub to use pnpm
+        # If you use pnpm or yarn, the action usually detects it automatically.
