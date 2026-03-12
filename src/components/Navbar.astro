@@ -44,7 +44,7 @@ let links: NavBarLink[] = navBarConfig.links.map(
                 <span class="text-[var(--content-meta)] mr-2">~/</span>{siteConfig.title}<span class="animate-blink">_</span>
             </div>
         </a>
-        <div class="hidden md:flex items-center space-x-1">
+        <div class="md:flex items-center space-x-1">
             {links.map((l) => {
                 return <DropdownMenu link={l} />;
             })}

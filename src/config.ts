@@ -159,7 +159,7 @@ export const navBarConfig: NavBarConfig = {
 export const profileConfig: ProfileConfig = {
 	avatar: "assets/images/duck.gif", // Relative to /src directory. If starts with '/', relative to /public directory
 	name: "Neel Ijner",
-	bio: "Me When I'm Hacker",
+	bio: "CS Student - Bug Finder",
 	links: [
 		{
 			name: "GitHub",
