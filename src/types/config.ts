@@ -3,74 +3,72 @@ import type { DARK_MODE, LIGHT_MODE } from "../constants/constants";
 export type SiteConfig = {
 	title: string;
 	subtitle: string;
-	keywords?: string[]; // 站点关键词，用于生成 <meta name="keywords">
+	keywords?: string[]; // Site keywords, used to generate <meta name="keywords">
 
 	lang:
-	| "en"
-	| "zh_CN"
-	| "zh_TW"
-	| "ja"
-	| "ko"
-	| "es"
-	| "th"
-	| "vi"
-	| "tr"
-	| "id";
+		| "en"
+		| "zh_CN"
+		| "zh_TW"
+		| "ja"
+		| "ko"
+		| "es"
+		| "th"
+		| "vi"
+		| "tr"
+		| "id";
 
 	themeColor: {
 		hue: number;
 		fixed: boolean;
 	};
 
-	// 添加字体配置
+	// Add font configuration
 	font: {
 		zenMaruGothic: {
-			enable: boolean; // 是否使用 ZenMaruGothic-Black 作为全局字体
+			enable: boolean; // Whether to use ZenMaruGothic-Black as global font
 		};
 		hanalei: {
-			enable: boolean; // 是否使用 Hanalei 作为全局字体
+			enable: boolean; // Whether to use Hanalei as global font
 		};
 	};
 
-
-
 	// 添加bangumi配置
 	bangumi?: {
-		userId?: string; // Bangumi用户ID
+		userId?: string; // Bangumi user ID
 	};
 
 	// 添加番剧页面配置
 	anime?: {
-		mode?: "bangumi" | "local"; // 番剧页面模式
+		mode?: "bangumi" | "local"; // Anime page mode
 	};
 
 	banner: {
 		enable: boolean;
 		src:
-		| string
-		| string[]
-		| {
-			desktop?: string | string[];
-			mobile?: string | string[];
-		}; // 支持单个图片、图片数组或分别设置桌面端和移动端图片
+			| string
+			| string[]
+			| {
+					desktop?: string | string[];
+					mobile?: string | string[];
+			  }; // Supports single image, image array, or separate desktop and mobile images
 		position?: "top" | "center" | "bottom";
 		carousel?: {
-			enable: boolean; // 是否启用轮播
-			interval: number; // 轮播间隔时间（秒）
+			enable: boolean; // Whether to enable carousel
+			interval: number; // Carousel interval (seconds)
 		};
 		imageApi?: {
-			enable: boolean; // 是否启用图片API
-			url: string; // API地址，返回每行一个图片链接的文本
+			enable: boolean; // Whether to enable image API
+			url: string; // API address, returns text with one image link per line
 		};
 		homeText?: {
-			enable: boolean; // 是否在首页显示自定义文字
-			title?: string; // 主标题
-			subtitle?: string | string[]; // 副标题，支持单个字符串或字符串数组
+			enable: boolean; // Whether to display custom text on homepage
+			title?: string; // Main title
+			subtitle?: string | string[]; // Subtitle, supports single string or string array
 			typewriter?: {
-				enable: boolean; // 是否启用打字机效果
-				speed: number; // 打字速度（毫秒）
-				deleteSpeed: number; // 删除速度（毫秒）
-				pauseTime: number; // 完整显示后的暂停时间（毫秒）
+				enable: boolean; // Whether to enable typewriter effect
+				speed: number; // Typing speed (ms)
+				deleteSpeed: number; // Delete speed (ms)
+				pauseTime: number; // Pause time after full display (ms)
 			};
 		};
 		credit: {
@@ -79,7 +77,7 @@ export type SiteConfig = {
 			url?: string;
 		};
 		navbar?: {
-			transparentMode?: "semi" | "full" | "semifull"; // 导航栏透明模式
+			transparentMode?: "semi" | "full" | "semifull"; // Navbar transparent mode
 		};
 	};
 	toc: {
@@ -88,7 +86,7 @@ export type SiteConfig = {
 	};
 	generateOgImages: boolean;
 	favicon: Favicon[];
-	showLastModified: boolean; // 控制“上次编辑”卡片显示的开关
+	showLastModified: boolean; // Control whether to show "last edited" card
 };
 
 export type Favicon = {
@@ -115,8 +113,8 @@ export type NavBarLink = {
 	name: string;
 	url: string;
 	external?: boolean;
-	icon?: string; // 菜单项图标
-	children?: (NavBarLink | LinkPreset)[]; // 支持子菜单，可以是NavBarLink或LinkPreset
+	icon?: string; // Menu item icon
+	children?: (NavBarLink | LinkPreset)[]; // Supports submenus, can be NavBarLink or LinkPreset
 };
 
 export type NavBarConfig = {
@@ -139,10 +137,10 @@ export type LicenseConfig = {
 	name: string;
 	url: string;
 };
-// 评论配置
+// Comment configuration
 
 export type CommentConfig = {
-	enable: boolean; // 是否启用评论功能
+	enable: boolean; // Whether to enable comments
 	twikoo?: TwikooConfig;
 };
 
@@ -152,9 +150,7 @@ type TwikooConfig = {
 	lang?: string;
 };
 
-export type LIGHT_DARK_MODE =
-	| typeof LIGHT_MODE
-	| typeof DARK_MODE;
+export type LIGHT_DARK_MODE = typeof LIGHT_MODE | typeof DARK_MODE;
 
 export type BlogPostData = {
 	body: string;
@@ -177,28 +173,25 @@ export type ExpressiveCodeConfig = {
 };
 
 export type AnnouncementConfig = {
-	// enable属性已移除，现在通过sidebarLayoutConfig统一控制
-	title?: string; // 公告栏标题
-	content: string; // 公告栏内容
-	icon?: string; // 公告栏图标
-	type?: "info" | "warning" | "success" | "error"; // 公告类型
-	closable?: boolean; // 是否可关闭
+	// The enable property has been removed, now controlled uniformly by sidebarLayoutConfig
+	title?: string; // Announcement title
+	content: string; // Announcement content
+	icon?: string; // Announcement icon
+	type?: "info" | "warning" | "success" | "error"; // Announcement type
+	closable?: boolean; // Whether it can be closed
 	link?: {
-		enable: boolean; // 是否启用链接
-		text: string; // 链接文字
-		url: string; // 链接地址
-		external?: boolean; // 是否外部链接
+		enable: boolean; // Whether to enable link
+		text: string; // Link text
+		url: string; // Link URL
+		external?: boolean; // Whether it's an external link
 	};
 };
 
-
-
 export type FooterConfig = {
-	enable: boolean; // 是否启用Footer HTML注入功能
-	customHtml?: string; // 自定义HTML内容，用于添加备案号等信息
+	enable: boolean; // Whether to enable Footer HTML injection
 };
 
-// 组件配置类型定义
+// Component configuration type definition
 export type WidgetComponentType =
 	| "profile"
 	| "announcement"
@@ -208,62 +201,58 @@ export type WidgetComponentType =
 	| "custom";
 
 export type WidgetComponentConfig = {
-	type: WidgetComponentType; // 组件类型
-	enable: boolean; // 是否启用该组件
-	order: number; // 显示顺序，数字越小越靠前
-	position: "top" | "sticky"; // 组件位置：顶部固定区域或粘性区域
-	class?: string; // 自定义CSS类名
-	style?: string; // 自定义内联样式
-	animationDelay?: number; // 动画延迟时间（毫秒）
+	type: WidgetComponentType; // Component type
+	enable: boolean; // Whether to enable this component
+	order: number; // Display order, smaller number means higher priority
+	position: "top" | "sticky"; // Component position: top fixed area or sticky area
+	class?: string; // Custom CSS class name
+	style?: string; // Custom inline style
+	animationDelay?: number; // Animation delay (ms)
 	responsive?: {
-		hidden?: ("mobile" | "tablet" | "desktop")[]; // 在指定设备上隐藏
-		collapseThreshold?: number; // 折叠阈值
+		hidden?: ("mobile" | "tablet" | "desktop")[]; // Hidden on specified devices
+		collapseThreshold?: number; // Collapse threshold
 	};
-	customProps?: Record<string, any>; // 自定义属性，用于扩展组件功能
+	customProps?: Record<string, any>; // Custom properties for extending component functionality
 };
 
 export type SidebarLayoutConfig = {
-	enable: boolean; // 是否启用侧边栏
-	position: "left" | "right"; // 侧边栏位置：左侧或右侧
-	components: WidgetComponentConfig[]; // 组件配置列表
+	enable: boolean; // Whether to enable sidebar
+	position: "left" | "right"; // Sidebar position: left or right
+	components: WidgetComponentConfig[]; // Component configuration list
 	defaultAnimation: {
-		enable: boolean; // 是否启用默认动画
-		baseDelay: number; // 基础延迟时间（毫秒）
-		increment: number; // 每个组件递增的延迟时间（毫秒）
+		enable: boolean; // Whether to enable default animation
+		baseDelay: number; // Base delay (ms)
+		increment: number; // Increment delay for each component (ms)
 	};
 	responsive: {
 		breakpoints: {
-			mobile: number; // 移动端断点（px）
-			tablet: number; // 平板端断点（px）
-			desktop: number; // 桌面端断点（px）
+			mobile: number; // Mobile breakpoint (px)
+			tablet: number; // Tablet breakpoint (px)
+			desktop: number; // Desktop breakpoint (px)
 		};
 		layout: {
-			mobile: "hidden" | "bottom" | "drawer" | "sidebar"; // 移动端布局模式
-			tablet: "sidebar" | "bottom" | "drawer"; // 平板端布局模式
-			desktop: "sidebar"; // 桌面端布局模式
+			mobile: "hidden" | "bottom" | "drawer" | "sidebar"; // Mobile layout mode
+			tablet: "sidebar" | "bottom" | "drawer"; // Tablet layout mode
+			desktop: "sidebar"; // Desktop layout mode
 		};
 	};
 };
 
-
-
 export type FullscreenWallpaperConfig = {
-	enable: boolean; // 是否启用全屏壁纸功能
+	enable: boolean; // Whether to enable fullscreen wallpaper
 	src:
-	| string
-	| string[]
-	| {
-		desktop?: string | string[];
-		mobile?: string | string[];
-	}; // 支持单个图片、图片数组或分别设置桌面端和移动端图片
-	position?: "top" | "center" | "bottom"; // 壁纸位置，等同于 object-position
+		| string
+		| string[]
+		| {
+				desktop?: string | string[];
+				mobile?: string | string[];
+		  }; // Supports single image, image array, or separate desktop and mobile images
+	position?: "top" | "center" | "bottom"; // Wallpaper position, equivalent to object-position
 	carousel?: {
-		enable: boolean; // 是否启用轮播
-		interval: number; // 轮播间隔时间（秒）
+		enable: boolean; // Whether to enable carousel
+		interval: number; // Carousel interval (seconds)
 	};
-	zIndex?: number; // 层级，确保壁纸在合适的层级显示
-	opacity?: number; // 壁纸透明度，0-1之间
-	blur?: number; // 背景模糊程度，单位px
+	zIndex?: number; // Z-index, ensure wallpaper is displayed at the correct layer
+	opacity?: number; // Wallpaper opacity, between 0-1
+	blur?: number; // Background blur amount, in px
 };
-
-

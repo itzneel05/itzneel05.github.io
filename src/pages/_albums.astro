@@ -4,7 +4,7 @@ import { i18n } from "../i18n/translation";
 import MainGridLayout from "../layouts/MainGridLayout.astro";
 import { scanAlbums } from "../utils/album-scanner";
 
-// 获取所有相册
+// Get all albums
 const albumsData = await scanAlbums();
 ---
 
@@ -12,7 +12,7 @@ const albumsData = await scanAlbums();
   <div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32">
     <div class="card-base z-10 px-9 py-6 relative w-full">
       
-      <!-- 页面标题 -->
+      <!-- Page title -->
       <header class="mb-8">
         <h1 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-3">
           {i18n(I18nKey.albums)}
@@ -22,14 +22,14 @@ const albumsData = await scanAlbums();
         </p>
       </header>
 
-      <!-- 相册网格 -->
+      <!-- Album grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {albumsData.map(album => (
           <article 
             class="album-card group bg-white dark:bg-neutral-900 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-neutral-200 dark:border-neutral-800"
           >
             <a href={`/albums/${album.id}/`} class="block">
-              <!-- 封面图片 -->
+              <!-- Cover image -->
               <div class="aspect-[4/3] overflow-hidden bg-neutral-100 dark:bg-neutral-700">
                 <img 
                   src={album.cover} 
@@ -39,7 +39,7 @@ const albumsData = await scanAlbums();
                 />
               </div>
               
-              <!-- 相册信息 -->
+              <!-- Album information -->
               <div class="p-4">
                 <h3 class="font-bold text-lg text-neutral-900 dark:text-neutral-100 mb-2 group-hover:text-[var(--primary)] transition-colors">
                   {album.title}
@@ -51,7 +51,7 @@ const albumsData = await scanAlbums();
                   </p>
                 )}
                 
-                <!-- 元数据 -->
+                <!-- Metadata -->
                 <div class="flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-500">
                   <div class="flex items-center gap-4">
                     <span>{album.photos.length} {album.photos.length > 1 ? i18n(I18nKey.albumsPhotosCount) : i18n(I18nKey.albumsPhotoCount)}</span>
@@ -64,10 +64,10 @@ const albumsData = await scanAlbums();
                       </span>
                     )}
                   </div>
-                  <time>{new Date(album.date).toLocaleDateString('zh-CN')}</time>
+                  <time>{new Date(album.date).toLocaleDateString('en-US')}</time>
                 </div>
                 
-                <!-- 标签 -->
+                <!-- Tags -->
                 {album.tags && album.tags.length > 0 && (
                   <div class="flex flex-wrap gap-1 mt-3">
                     {album.tags.slice(0, 3).map(tag => (
@@ -88,7 +88,7 @@ const albumsData = await scanAlbums();
         ))}
       </div>
       
-      <!-- 空状态 -->
+      <!-- Empty state -->
       {albumsData.length === 0 && (
         <div class="text-center py-12">
           <div class="text-neutral-400 dark:text-neutral-600 mb-4">

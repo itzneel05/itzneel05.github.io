@@ -42,18 +42,18 @@ export default defineConfig({
 			// the default value `transition-` cause transition delay
 			// when the Tailwind class `transition-all` is used
 			containers: ["main"],
-			smoothScrolling: false, // 禁用平滑滚动以提升性能，避免与锚点导航冲突
+			smoothScrolling: false, // Disable smooth scrolling to improve performance, avoid conflicts with anchor navigation
 			cache: true,
-			preload: false, // 禁用预加载以减少网络请求
+			preload: false, // Disable preloading to reduce network requests
 			accessibility: true,
 			updateHead: true,
 			updateBodyClass: false,
 			globalInstance: true,
-			// 滚动相关配置优化
+			// Scroll related configuration optimization
 			resolveUrl: (url) => url,
 			animateHistoryBrowsing: false,
 			skipPopStateHandling: (event) => {
-				// 跳过锚点链接的处理，让浏览器原生处理
+				// Skip anchor link processing, let the browser handle it natively
 				return event.state && event.state.url && event.state.url.includes("#");
 			},
 		}),
@@ -85,6 +85,9 @@ export default defineConfig({
 						frame: "code",
 					},
 					shell: {
+						frame: "code",
+					},
+					sh: {
 						frame: "code",
 					},
 					sh: {

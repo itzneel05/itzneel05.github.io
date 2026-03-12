@@ -40,7 +40,7 @@ const generateTOC = () => {
 	headings.forEach((heading) => {
 		if (heading.id) {
 			const level = Number.parseInt(heading.tagName.charAt(1));
-			const text = (heading.textContent || '').replace(/#+\s*$/, '');
+			const text = (heading.textContent || "").replace(/#+\s*$/, "");
 			items.push({ id: heading.id, text, level });
 		}
 	});
@@ -249,7 +249,7 @@ if (typeof window !== "undefined") {
 		{#if postItems.length === 0}
 			<div class="text-center py-8 text-black/50 dark:text-white/50">
 				<Icon icon="material-symbols:article-outline" class="text-2xl mb-2" />
-				<p>暂无文章</p>
+				<p>No posts yet</p>
 			</div>
 		{:else}
 			<div class="post-content">
@@ -275,7 +275,7 @@ if (typeof window !== "undefined") {
 		{#if tocItems.length === 0}
 			<div class="text-center py-8 text-black/50 dark:text-white/50">
 				<Icon icon="material-symbols:article-outline" class="text-2xl mb-2" />
-				<p>当前页面没有目录</p>
+				<p>No table of contents on this page</p>
 			</div>
 		{:else}
 			<div class="toc-content">

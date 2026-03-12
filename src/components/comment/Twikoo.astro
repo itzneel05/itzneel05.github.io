@@ -16,13 +16,13 @@ const config = {
 <script is:inline src="/scroll-protection.js"></script>
 <script is:inline src="/assets/js/twikoo.all.min.js"></script>
 <script is:inline define:vars={{ config }}>
-  // 获取当前页面路径
+  // Get current page path
   function getCurrentPath() {
     const pathname = window.location.pathname;
     return pathname.endsWith('/') && pathname.length > 1 ? pathname.slice(0, -1) : pathname;
   }
   
-  // 动态创建配置对象
+  // Dynamically create config object
   function createTwikooConfig() {
     return {
       ...config,
@@ -31,32 +31,32 @@ const config = {
     };
   }
   
-  // 初始化 Twikoo
+  // Initialize Twikoo
   function initTwikoo() {
     if (typeof twikoo !== 'undefined') {
       const commentEl = document.getElementById('tcomment');
       if (commentEl) {
         commentEl.innerHTML = '';
         
-        const dynamicConfig = createTwikooConfig();
-        console.log('[Twikoo] 初始化配置:', dynamicConfig);
+      const dynamicConfig = createTwikooConfig();
+      console.log('[Twikoo] Initializing config:', dynamicConfig);
         
         twikoo.init(dynamicConfig).then(() => {
-          console.log('[Twikoo] 初始化完成');
+          console.log('[Twikoo] Initialization complete');
         }).catch((error) => {
-          console.error('[Twikoo] 初始化失败:', error);
+          console.error('[Twikoo] Initialization failed:', error);
         });
       }
     } else {
-      // 如果 Twikoo 未加载，稍后重试
+      // If Twikoo is not loaded, retry later
       setTimeout(initTwikoo, 500);
     }
   }
   
-  // 页面加载时初始化
+  // Initialize on page load
   document.addEventListener('DOMContentLoaded', initTwikoo);
   
-  // Swup 页面切换后重新初始化
+  // Reinitialize after Swup page change
   if (window.swup && window.swup.hooks) {
     window.swup.hooks.on('content:replace', function() {
       setTimeout(initTwikoo, 200);
@@ -71,11 +71,11 @@ const config = {
     });
   }
   
-  // 自定义事件监听
+  // Custom event listener
   document.addEventListener('mizuki:page:loaded', function() {
     const commentEl = document.getElementById('tcomment');
     if (commentEl) {
-      console.log('[Twikoo] 通过自定义事件重新初始化');
+      console.log('[Twikoo] Re-initializing via custom event');
       initTwikoo();
     }
   });

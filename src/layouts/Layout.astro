@@ -1,5 +1,5 @@
 ---
-// 只加载最常用的字体权重，减少加载时间
+// Only load the most common font weights to reduce loading time
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/700.css";
 
@@ -48,14 +48,14 @@ const isHomePage = pathsEqual(Astro.url.pathname, url("/"));
 // why doing this in Layout instead of GlobalStyles: https://github.com/withastro/astro/issues/6728#issuecomment-1502203757
 const configHue = siteConfig.themeColor.hue;
 
-// 获取导航栏透明模式配置
+// Get navbar transparent mode config
 const navbarTransparentMode =
 	siteConfig.banner?.navbar?.transparentMode || "semi";
-// 判断是否应该显示顶部高光效果（只在full和semifull模式下显示）
+// Determine whether to show top highlight effect (only in full and semifull modes)
 const shouldShowTopHighlight =
 	navbarTransparentMode === "full" || navbarTransparentMode === "semifull";
 
-// 获取默认banner图片的辅助函数
+// Helper function to get default banner image
 const getDefaultBanner = (): string => {
 	const src = siteConfig.banner.src;
 	if (typeof src === "string") {
@@ -149,7 +149,7 @@ const umamiScripts = umamiConfig.scripts || ""; // 获取Umami scripts配置
 			}
 		</script>
 		<script is:inline>
-			// 使用 requestIdleCallback 延迟加载第三方脚本
+			// Analytics scripts. Using requestIdleCallback to defer loading.
 			function loadAnalytics() {
 				// Google Tag Manager
 				(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KRX3XGVH');
@@ -222,8 +222,8 @@ const umamiScripts = umamiConfig.scripts || ""; // 获取Umami scripts配置
 			const expressiveTheme = isDark ? "github-dark" : "github-light";
 			document.documentElement.setAttribute("data-theme", expressiveTheme);
 			
-			// 确保主题正确应用 - 解决代码块渲染问题
-			// 使用 requestAnimationFrame 确保在下一帧检查主题状态
+			// Ensure theme is applied correctly - resolves code block rendering issues
+			// Use requestAnimationFrame to check theme status in the next frame
 			requestAnimationFrame(() => {
 				const currentTheme = document.documentElement.getAttribute('data-theme');
 				if (currentTheme !== expressiveTheme) {
@@ -430,8 +430,8 @@ function loadHue() {
 }
 
 function initCustomScrollbar() {
-	// 完全禁用OverlayScrollbars的body初始化，避免导致页面重新加载
-	// 只处理katex元素的滚动条
+		// Fully disable OverlayScrollbars body initialization to avoid page reload
+		// Only handle scrollbars for katex elements
 	const katexElements = document.querySelectorAll('.katex-display:not([data-scrollbar-initialized])') as NodeListOf<HTMLElement>;
 	katexElements.forEach(element => {
 		if (!element.parentNode) return;
@@ -441,14 +441,14 @@ function initCustomScrollbar() {
 		element.parentNode.insertBefore(container, element);
 		container.appendChild(element);
 
-		// 使用简单的CSS滚动条而不是OverlayScrollbars
+		// Use simple CSS scrollbars instead of OverlayScrollbars
 		container.style.cssText = `
 			overflow-x: auto;
 			scrollbar-width: thin;
 			scrollbar-color: rgba(0,0,0,0.3) transparent;
 		`;
 		
-		// 为webkit浏览器添加自定义滚动条样式
+		// Add custom scrollbar styles for webkit browsers
 		const style = document.createElement('style');
 		style.textContent = `
 			.katex-display-container::-webkit-scrollbar {
@@ -475,7 +475,7 @@ function initCustomScrollbar() {
 }
 
 function showBanner() {
-	// 使用requestAnimationFrame优化DOM操作
+	// Optimize DOM operations with requestAnimationFrame
 	requestAnimationFrame(() => {
 		// Handle single image banner (desktop)
 		const banner = document.getElementById('banner');
@@ -483,15 +483,15 @@ function showBanner() {
 			banner.classList.remove('opacity-0', 'scale-105');
 		}
 
-		// Handle mobile single image banner - 使用与电脑端相同的逻辑
+		// Handle mobile single image banner - use same logic as desktop
 		const mobileBanner = document.querySelector('.block.lg\\:hidden[alt="Mobile banner image of the blog"]');
 		if (mobileBanner && !document.getElementById('banner-carousel')) {
-			// 移动端使用与电脑端相同的初始化逻辑
+			// Mobile: use same initialization logic as desktop
 			mobileBanner.classList.remove('opacity-0', 'scale-105');
 			mobileBanner.classList.add('opacity-100');
 		}
 
-		// Handle carousel banner - 立即初始化，移除延迟
+		// Handle carousel banner - initialize immediately, remove delay
 		const carousel = document.getElementById('banner-carousel');
 		if (carousel) {
 			// 立即初始化轮播，移除延迟以改善流畅性
@@ -503,14 +503,14 @@ function showBanner() {
 function initCarousel() {
 	const carouselItems = document.querySelectorAll('.carousel-item');
 	
-	// 根据屏幕尺寸过滤有效的轮播项
+	// Filter valid carousel items based on screen size
 	const isMobile = window.innerWidth < 1024; // lg breakpoint
 	const validItems = Array.from(carouselItems).filter(item => {
 		if (isMobile) {
-			// 移动端：只显示有mobile图片的项目
+			// Mobile: only show items with mobile images
 			return item.querySelector('.block.lg\\:hidden');
 		} else {
-			// 桌面端：只显示有desktop图片的项目
+			// Desktop: only show items with desktop images
 			return item.querySelector('.hidden.lg\\:block');
 		}
 	});
@@ -538,13 +538,13 @@ function initCarousel() {
 		let carouselInterval;
 		let isPaused = false;
 
-		// 移动端触摸手势支持
+		// Mobile touch gesture support
 		let startX = 0;
 		let startY = 0;
 		let isSwiping = false;
 		const carousel = document.getElementById('banner-carousel');
 
-		// 切换图片的函数 - 基于有效项目
+		// Function to switch images - based on valid items
 		function switchToSlide(index) {
 			// 隐藏当前图片
 			const currentItem = validItems[currentIndex];
@@ -560,19 +560,19 @@ function initCarousel() {
 			nextItem.classList.remove('opacity-0', 'scale-110');
 		}
 
-		// 初始化：隐藏所有图片，只显示第一张有效图片
+		// Initialize: hide all images, only show the first valid image
 		carouselItems.forEach((item) => {
 			item.classList.add('opacity-0', 'scale-110');
 			item.classList.remove('opacity-100', 'scale-100');
 		});
 		
-		// 显示第一张有效图片
+		// Show the first valid image
 		if (validItems.length > 0) {
 			validItems[0].classList.add('opacity-100', 'scale-100');
 			validItems[0].classList.remove('opacity-0', 'scale-110');
 		}
 
-		// 移动端触摸事件
+		// Mobile touch events
 		if (carousel && 'ontouchstart' in window) {
 			carousel.addEventListener('touchstart', (e) => {
 				startX = e.touches[0].clientX;
@@ -588,7 +588,7 @@ function initCarousel() {
 				const diffX = Math.abs(e.touches[0].clientX - startX);
 				const diffY = Math.abs(e.touches[0].clientY - startY);
 				
-				// 判断是否为水平滑动
+				// Determine if it's a horizontal swipe
 				if (diffX > diffY && diffX > 30) {
 					isSwiping = true;
 					e.preventDefault();
@@ -605,14 +605,14 @@ function initCarousel() {
 				const endX = e.changedTouches[0].clientX;
 				const diffX = startX - endX;
 				
-				// 滑动距离超过50px才切换
+				// Only switch if swipe distance > 50px
 				if (Math.abs(diffX) > 50) {
 					if (diffX > 0) {
-					// 向左滑动，显示下一张
+					// Swipe left, show next
 					const nextIndex = (currentIndex + 1) % validItems.length;
 					switchToSlide(nextIndex);
 				} else {
-					// 向右滑动，显示上一张
+					// Swipe right, show previous
 					const prevIndex = (currentIndex - 1 + validItems.length) % validItems.length;
 					switchToSlide(prevIndex);
 				}
@@ -623,12 +623,12 @@ function initCarousel() {
 				isSwiping = false;
 				isPaused = false;
 				
-				// 重新开始自动轮播
+				// Restart auto-carousel
 				startCarousel();
 			}, { passive: true });
 		}
 
-		// 开始轮播的函数
+		// Function to start carousel
 		function startCarousel() {
 			clearInterval(carouselInterval);
 			carouselInterval = setInterval(() => {
@@ -639,7 +639,7 @@ function initCarousel() {
 			}, interval * 1000);
 		}
 
-		// 鼠标悬停暂停（桌面端）
+		// Mouse hover pause (desktop)
 		if (carousel) {
 			carousel.addEventListener('mouseenter', () => {
 				isPaused = true;
@@ -652,7 +652,7 @@ function initCarousel() {
 			});
 		}
 
-		// 开始自动轮播
+		// Start auto-carousel
 		startCarousel();
 	}
 }
@@ -678,7 +678,7 @@ const setup = () => {
 		// Remove the delay for the first time page load
 		document.documentElement.style.setProperty('--content-delay', '0ms')
 
-		// 简化navbar处理逻辑
+		// Simplify navbar handling logic
 		if (bannerEnabled) {
 			const navbar = document.getElementById('navbar-wrapper')
 			if (navbar && document.body.classList.contains('lg:is-home')) {
@@ -690,14 +690,14 @@ const setup = () => {
 		}
 	})
 	window.swup.hooks.on('content:replace', () => {
-		// 只处理新的katex元素的滚动条，使用原生CSS滚动条
+		// Only process new katex elements' scrollbars, using native CSS scrollbars
 		initCustomScrollbar();
 		
-		// 检查当前页面是否为文章页面（有TOC元素）
+		// Check if current page is an article page (has TOC element)
 		const tocWrapper = document.getElementById('toc-wrapper');
 		const isArticlePage = tocWrapper !== null;
 		
-		// 只在文章页面重新初始化 TOC 组件
+		// Only reinitialize TOC components on article pages
 		if (isArticlePage) {
 			const tocElement = document.querySelector('table-of-contents');
 			if (tocElement && typeof (tocElement as any).init === 'function') {
@@ -706,7 +706,7 @@ const setup = () => {
 				}, 100);
 			}
 			
-			// 重新初始化移动端 TOC 组件
+			// Reinitialize mobile TOC component
 			if (typeof (window as any).mobileTOCInit === 'function') {
 				setTimeout(() => {
 					(window as any).mobileTOCInit();
@@ -716,7 +716,7 @@ const setup = () => {
 		
 		
 		
-		// 重新初始化semifull模式的滚动检测
+		// Reinitialize semifull mode scroll detection
 		const navbar = document.getElementById('navbar')
 		if (navbar) {
 			const transparentMode = navbar.getAttribute('data-transparent-mode')
@@ -755,7 +755,7 @@ const setup = () => {
 		if (navbar) {
 			navbar.setAttribute('data-is-home', isHomePage.toString())
 			
-			// 重新初始化semifull模式的滚动检测
+		// Reinitialize semifull mode scroll detection
 			const transparentMode = navbar.getAttribute('data-transparent-mode')
 			if (transparentMode === 'semifull') {
 				// 重新调用初始化函数来重新绑定滚动事件
@@ -771,7 +771,7 @@ const setup = () => {
 		
 		if (bannerWrapper && mainContentWrapper) {
 			if (isHomePage) {
-				// 首页：延迟移除隐藏类，让banner和内容优雅地出现
+				// Homepage: delay removal of hidden classes for elegant banner and content appearance
 				setTimeout(() => {
 					bannerWrapper.classList.remove('mobile-hide-banner')
 				}, 100)
@@ -779,9 +779,9 @@ const setup = () => {
 					mainContentWrapper.classList.remove('mobile-main-no-banner')
 				}, 150)
 			} else {
-				// 非首页：分阶段隐藏，先隐藏banner，再移动内容
+				// Non-homepage: hide in stages, first banner, then move content
 				bannerWrapper.classList.add('mobile-hide-banner')
-				// 延迟移动内容，让banner先完全消失
+				// Delay content movement, allow banner to fully disappear first
 				setTimeout(() => {
 					mainContentWrapper.classList.add('mobile-main-no-banner')
 				}, 100)
@@ -807,31 +807,31 @@ const setup = () => {
 			heightExtend.classList.remove('hidden')
 		}
 		
-		// 确保页面滚动到顶部，特别是移动端banner关闭时
+		// Ensure page scrolls to top, especially when mobile banner is closed
 		window.scrollTo({
 			top: 0,
 			behavior: 'instant'
 		});
 		
-		// 同步主题状态 - 解决从首页进入文章页面时代码块渲染问题
+		// Sync theme status - fix code block rendering when navigating from homepage to post page
 		const storedTheme = localStorage.getItem('theme') || 'LIGHT_MODE';
 		const isDark = storedTheme === 'DARK_MODE';
 		const expectedTheme = isDark ? 'github-dark' : 'github-light';
 		const currentTheme = document.documentElement.getAttribute('data-theme');
 		
-		// 如果主题不匹配，强制重新应用
+		// If theme does not match, force reapply
 		if (currentTheme !== expectedTheme) {
 			document.documentElement.setAttribute('data-theme', expectedTheme);
-			// 触发代码块重新渲染
+			// Trigger code block re-render
 			setTimeout(() => {
 				window.dispatchEvent(new CustomEvent('theme-change'));
 			}, 50);
 		}
 		
-		// 检查当前页面是否为文章页面，如果是则触发自定义事件用于初始化评论系统
+		// Check if current page is a post page, if so trigger custom event to init comment system
 		setTimeout(() => {
 			if (document.getElementById('tcomment')) {
-				// 触发自定义事件，通知评论系统页面已完全加载
+				// Trigger custom event to notify comment system that page is fully loaded
 				const pageLoadedEvent = new CustomEvent('mizuki:page:loaded', {
 					detail: {
 						path: window.location.pathname,
@@ -886,7 +886,7 @@ function scrollFunction() {
 	const scrollTop = document.documentElement.scrollTop;
 	const bannerHeight = window.innerHeight * (BANNER_HEIGHT / 100);
 
-	// 批量处理DOM操作
+	// Batch DOM operations
 	requestAnimationFrame(() => {
 		if (backToTopBtn) {
 			if (scrollTop > bannerHeight) {
@@ -918,7 +918,7 @@ function scrollFunction() {
 	});
 }
 
-// 使用节流优化滚动性能
+// Use throttling to optimize scroll performance
 window.onscroll = throttle(scrollFunction, 16); // 约60fps
 
 window.onresize = () => {
@@ -928,7 +928,7 @@ window.onresize = () => {
 	document.documentElement.style.setProperty('--banner-height-extend', `${offset}px`);
 }
 
-// 页面加载完成后初始化banner和轮播图
+// Initialize banner and carousel after page load
 if (document.readyState === 'loading') {
 	document.addEventListener('DOMContentLoaded', () => {
 		showBanner();
@@ -948,11 +948,11 @@ import '../scripts/code-collapse.js';
 import { Fancybox } from "@fancyapps/ui";
 import "@fancyapps/ui/dist/fancybox/fancybox.css";
 
-// 使用单例模式避免重复初始化
+// Use singleton pattern to avoid repeated initialization
 let fancyboxInstances: any[] = [];
 
 function initFancybox() {
-  // 不需要关闭所有实例，只需检查是否已经初始化
+  // No need to destroy all instances, just check if already initialized
   if (fancyboxInstances.length > 0) {
     return; // 已经初始化，直接返回
   }
@@ -1001,7 +1001,7 @@ function initFancybox() {
     caption: false
   };
   
-  // 为相册图片添加 Fancybox 支持
+  // Add Fancybox support for album images
   fancyboxInstances.push(
     Fancybox.bind(".custom-md img, #post-cover img, .moment-images img", {
       ...commonConfig,
@@ -1013,7 +1013,7 @@ function initFancybox() {
     } as any)
   );
   
-  // 为相册中的链接添加 Fancybox 支持
+  // Add Fancybox support for links in albums
   fancyboxInstances.push(
     Fancybox.bind(".moment-images a[data-fancybox]", {
       ...commonConfig,
@@ -1023,13 +1023,13 @@ function initFancybox() {
     } as any)
   );
   
-  // 为单独的 fancybox 图片添加支持
+  // Add support for standalone fancybox images
   fancyboxInstances.push(
     Fancybox.bind("[data-fancybox]:not(.moment-images a)", commonConfig as any)
   );
 }
 
-// 清理 Fancybox 实例
+// Clean up Fancybox instances
 function cleanupFancybox() {
   fancyboxInstances.forEach(instance => {
     if (instance && typeof instance.destroy === 'function') {
@@ -1040,14 +1040,14 @@ function cleanupFancybox() {
 }
 
 const setup = () => {
-  // 初始化 Fancybox
+  // Initialize Fancybox
   initFancybox();
   
-  // 在页面视图更改时重新初始化
+  // Reinitialize when page view changes
   window.swup.hooks.on("page:view", () => {
-    // 清理旧实例
+    // Clean up old instances
     cleanupFancybox();
-    // 等待 DOM 更新后初始化
+    // Initialize after DOM updates
     requestAnimationFrame(() => {
       initFancybox();
     });
@@ -1059,7 +1059,7 @@ if (window.swup) {
 } else {
   document.addEventListener("swup:enable", setup)
   
-  // 如果 swup 尚未初始化，则直接初始化
+  // If swup is not initialized yet, initialize directly
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initFancybox);
   } else {

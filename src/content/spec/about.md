@@ -1,49 +1,62 @@
-## 👋 About Me
+---
+title: About
+---
 
-Me Smort Guy, I Can Do Anything hehe.
-<!-- A **CTF player** from **TKKC**
+# Hey, I'm Neel 👋
 
-* Primary focus: **Crypto / Web / Blockchain**
-* Secondary experience: some hands-on exposure to **Pwn / RE**
-* Common team names: **Bluebud / Ech1**
-* Joint teams: **wgpsec** and **chamd5**
+I'm a final-year Bachelor of Computer Application student stepping into the world of offensive security —
+currently focused on **penetration testing**, **VAPT**, and eventually **bug bounty hunting**.
+
+I'm building this space to document my learning journey: HTB machines, TryHackMe rooms,
+CTF challenges, and anything security-related I find worth writing about.
 
 ---
 
-## 📬 Contact
+## What I'm Doing Right Now
 
-* **QQ**: 2924465428
-
----
-
-## 🧰 Tech Stack & Development Experience
-
-I also work on small projects and write code regularly. My main experience includes:
-
-* Frontend: `Vue` / `React`
-* Backend: `Node.js` / `Golang`
-* Scripting: `Python`
-* Editors: `Neovim (nvim)` / `VS Code`
+- 🔴 Active **Security Testing Intern** — performing VAPT on real web applications
+- 🎯 Found and reported vulnerabilities ranging from **Low → Critical** severity in production environments
+- 📚 Completing my Bachelor's degree, heading into a Master's program
+- 🧠 Grinding TryHackMe and HackTheBox to sharpen my methodology
 
 ---
 
-## 🏆 On-site Competition Experience
+## Skills & Tools
 
-* **2024 Zhangdun Cup**
-* **2024 Chuhui Cup – Finals**
-* **2025 CISCN & CCB** — Third Prize
-* **2025 Software System Security Competition** — Third Prize
-* **2025 Industrial Cryptography Application Championship** — Excellence Award
-* **2025 Macau Hackathon** — Runner-up
-* **2025 Shandong Pengyun Cup – Finals**
-* **2025 Zhangdun Cup** — Champion 🏅
-* **2025 National Industrial Information Security Competition – Finals**
+| Category | Tools |
+|----------|-------|
+| Recon & Scanning | Nmap, FFUF |
+| Web Testing | Burp Suite Pro, OWASP ZAP, OWASP methodology |
+| Exploitation | Metasploit, manual exploitation |
+| Password Cracking | Hashcat, John the Ripper |
+| Scripting | Python, Bash |
+| OS | Kali Linux |
 
 ---
 
-## Projects
+## What I Post Here
 
-* my [dotfiles](https://github.com/LTX-GOD/dotfiles)
-* A theme for [Astro](https://github.com/matsuzaka-yuki/Mizuki)
-  You also can look my [blog](https://github.com/LTX-GOD/blog)
-* A tool for CTF but it has not been open-sourced. -->
+- **HTB / THM Writeups** — retired machines and rooms with full methodology
+- **CTF Writeups** — challenges from competitions I participate in
+- **VAPT Notes** — techniques and findings (sanitized, no sensitive data)
+
+I write writeups the way I wish I'd found them when I was stuck —
+**explaining the why, not just the commands.**
+
+---
+
+## Goals
+
+- Land a **penetration testing internship/job** before my Master's completes
+- Work toward **eJPT → CEH → OSCP** certification path
+- Build a body of work that speaks louder than a resume
+
+---
+
+## Get in Touch
+
+- 🐙 [GitHub](https://github.com/itzneel05)
+- 💼 [LinkedIn](https://www.linkedin.com/in/neel-ijner/)
+
+> *"The quieter you become, the more you can hear."* — Kali Linux motto
+

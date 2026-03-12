@@ -12,10 +12,10 @@ import type {
 } from "./types/config";
 import { LinkPreset } from "./types/config";
 
-// 移除i18n导入以避免循环依赖
+// Removed i18n import to avoid circular dependency
 
-// 定义站点语言
-const SITE_LANG = "en"; // 语言代码，例如：'en', 'zh_CN', 'ja' 等。
+// Define site language
+const SITE_LANG = "en"; // Language code, e.g.: 'en', 'zh_CN', 'ja', etc.
 
 export const siteConfig: SiteConfig = {
 	title: "ItzNeel's Space",
@@ -24,121 +24,115 @@ export const siteConfig: SiteConfig = {
 	lang: SITE_LANG,
 
 	themeColor: {
-		hue: 210, // 主题色的默认色相，范围从 0 到 360。例如：红色：0，青色：200，蓝绿色：250，粉色：345
-		fixed: false, // 对访问者隐藏主题色选择器
+		hue: 210, // Default theme color hue, range 0-360. e.g.: red: 0, cyan: 200, teal: 250, pink: 345
+		fixed: true, // Hide theme color picker from visitors
 	},
 
 	bangumi: {
-		userId: "your-bangumi-id", // 在此处设置你的Bangumi用户ID，可以设置为 "sai" 测试
+		userId: "your-bangumi-id", // Set your Bangumi user ID here
 	},
 
 	anime: {
-		mode: "local", // 番剧页面模式："bangumi" 使用Bangumi API，"local" 使用本地配置
+		mode: "local", // Anime page mode: "bangumi" uses Bangumi API, "local" uses local config
 	},
 
 	banner: {
-		enable: true, // 是否启动Banner壁纸模式
+		enable: true, // Enable banner wallpaper mode
 
-		// 支持单张图片或图片数组，当数组长度 > 1 时自动启用轮播
+		// Supports single image or image array; auto-enables carousel when array length > 1
 		src: {
-			desktop: [
-				// "/assets/images/beijing.jpg",
-				"/assets/images/hoho.jpg",
-			], // 桌面横幅图片
-			mobile: [
-				// "/assets/images/beijing.jpg",
-				"/assets/images/hoho.jpg",
-			], // 移动横幅图片
-		}, // 使用本地横幅图片
+			desktop: ["/assets/images/hoho.jpg"], // Desktop banner images
+			mobile: ["/assets/images/hoho.jpg"], // Mobile banner images
+		}, // Use local banner images
 
-		position: "center", // 等同于 object-position，仅支持 'top', 'center', 'bottom'。默认为 'center'
+		position: "center", // Equivalent to object-position, supports 'top', 'center', 'bottom'. Default: 'center'
 
 		carousel: {
-			enable: true, // 为 true 时：为多张图片启用轮播。为 false 时：从数组中随机显示一张图片
+			enable: true, // true: enable carousel for multiple images. false: randomly show one image from array
 
-			interval: 1.5, // 轮播间隔时间（秒）
+			interval: 1.5, // Carousel interval (seconds)
 		},
 
-		// PicFlow API支持(智能图片API)
+		// PicFlow API support (smart image API)
 		imageApi: {
-			enable: false, // 启用图片API
-			url: "http://domain.com/api_v2.php?format=text&count=4", // API地址，返回每行一个图片链接的文本
+			enable: false, // Enable image API
+			url: "http://domain.com/api_v2.php?format=text&count=4", // API address, returns text with one image link per line
 		},
-		// 这里需要使用PicFlow API的Text返回类型,所以我们需要format=text参数
-		// 项目地址:https://github.com/matsuzaka-yuki/PicFlow-API
-		// 请自行搭建API
+		// Use PicFlow API's Text return type, so format=text parameter is needed
+		// Project: https://github.com/matsuzaka-yuki/PicFlow-API
+		// Self-host the API
 
 		homeText: {
-			enable: true, // 在主页显示自定义文本
-			title: "ItzNeel.log", // 主页横幅主标题
+			enable: true, // Display custom text on homepage
+			title: "ItzNeel.log", // Homepage banner main title
 
 			subtitle: ["Attempting the impossible"],
 			typewriter: {
-				enable: true, // 启用副标题打字机效果
+				enable: true, // Enable subtitle typewriter effect
 
-				speed: 100, // 打字速度（毫秒）
-				deleteSpeed: 50, // 删除速度（毫秒）
-				pauseTime: 2000, // 完全显示后的暂停时间（毫秒）
+				speed: 100, // Typing speed (ms)
+				deleteSpeed: 50, // Delete speed (ms)
+				pauseTime: 2000, // Pause time after fully displayed (ms)
 			},
 		},
 
 		credit: {
-			enable: false, // 显示横幅图片来源文本
+			enable: false, // Show banner image credit text
 
-			text: "Describe", // 要显示的来源文本
-			url: "", // （可选）原始艺术品或艺术家页面的 URL 链接
+			text: "Describe", // Credit text to display
+			url: "", // (Optional) URL link to original artwork or artist page
 		},
 
 		navbar: {
-			transparentMode: "semifull", // 导航栏透明模式："semi" 半透明加圆角，"full" 完全透明，"semifull" 动态透明
+			transparentMode: "semifull", // Navbar transparency mode: "semi" semi-transparent + rounded, "full" fully transparent, "semifull" dynamic
 		},
 	},
 	toc: {
-		enable: true, // 启用目录功能
-		depth: 3, // 目录深度，1-6，1 表示只显示 h1 标题，2 表示显示 h1 和 h2 标题，依此类推
+		enable: true, // Enable table of contents
+		depth: 3, // TOC depth, 1-6. 1 = only h1, 2 = h1 and h2, etc.
 	},
-	generateOgImages: false, // 启用生成OpenGraph图片功能,注意开启后要渲染很长时间，不建议本地调试的时候开启
+	generateOgImages: false, // Enable OpenGraph image generation. Note: takes a long time to render, not recommended during local dev
 	favicon: [
-		// 留空以使用默认 favicon
+		// Leave empty to use default favicon
 		// {
-		//   src: '/favicon/icon.png',    // 图标文件路径
-		//   theme: 'light',              // 可选，指定主题 'light' | 'dark'
-		//   sizes: '32x32',              // 可选，图标大小
+		//   src: '/favicon/icon.png',    // Icon file path
+		//   theme: 'light',              // Optional, specify theme 'light' | 'dark'
+		//   sizes: '32x32',              // Optional, icon size
 		// }
 	],
 
-	// 字体配置
+	// Font configuration
 	font: {
 		zenMaruGothic: {
-			enable: true, // 启用全局圆体适合日语和英语，对中文适配一般
+			enable: true, // Enable global rounded font, good for Japanese and English
 		},
 		hanalei: {
-			enable: false, // 启用 Hanalei 字体作为全局字体，适合中文去使用
+			enable: false, // Enable Hanalei font as global font
 		},
 	},
-	showLastModified: true, // 控制“上次编辑”卡片显示的开关
+	showLastModified: true, // Toggle for "last edited" card display
 };
 export const fullscreenWallpaperConfig: FullscreenWallpaperConfig = {
-	enable: false, // 启用全屏壁纸功能,非Banner模式下生效
+	enable: false, // Enable fullscreen wallpaper (only works when banner is disabled)
 	src: {
-		desktop: [], // 桌面横幅图片
-		mobile: [], // 移动横幅图片
-	}, // 使用本地横幅图片
-	position: "center", // 壁纸位置，等同于 object-position
+		desktop: [], // Desktop wallpaper images
+		mobile: [], // Mobile wallpaper images
+	}, // Use local wallpaper images
+	position: "center", // Wallpaper position, equivalent to object-position
 	carousel: {
-		enable: true, // 启用轮播
-		interval: 1, // 轮播间隔时间（秒）
+		enable: true, // Enable carousel
+		interval: 1, // Carousel interval (seconds)
 	},
-	zIndex: -1, // 层级，确保壁纸在背景层
-	opacity: 0.8, // 壁纸透明度
-	blur: 1, // 背景模糊程度
+	zIndex: -1, // Z-index layer, keeps wallpaper in background
+	opacity: 0.8, // Wallpaper opacity
+	blur: 1, // Background blur amount
 };
 
 export const navBarConfig: NavBarConfig = {
 	links: [
 		LinkPreset.Home,
 		LinkPreset.Archive,
-		// 支持自定义导航栏链接,并且支持多级菜单,3.1版本新加
+		// Custom navbar links with multi-level menu support
 		{
 			name: "Links",
 			url: "/links/",
@@ -163,7 +157,7 @@ export const navBarConfig: NavBarConfig = {
 };
 
 export const profileConfig: ProfileConfig = {
-	avatar: "assets/images/duck.gif", // 相对于 /src 目录。如果以 '/' 开头，则相对于 /public 目录
+	avatar: "assets/images/duck.gif", // Relative to /src directory. If starts with '/', relative to /public directory
 	name: "Neel Ijner",
 	bio: "Me When I'm Hacker",
 	links: [
@@ -187,153 +181,153 @@ export const licenseConfig: LicenseConfig = {
 };
 
 export const expressiveCodeConfig: ExpressiveCodeConfig = {
-	// 注意：某些样式（如背景颜色）已被覆盖，请参阅 astro.config.mjs 文件。
-	// 请选择深色主题，因为此博客主题目前仅支持深色背景
+	// Note: Some styles (e.g. background color) are overridden. See astro.config.mjs.
+	// Choose a dark theme, as this blog currently only supports dark backgrounds.
 	theme: "github-dark",
 };
 
 export const commentConfig: CommentConfig = {
-	enable: false, // 启用评论功能。当设置为 false 时，评论组件将不会显示在文章区域。
+	enable: false, // Enable comments. When false, comment component won't show in post area.
 	twikoo: {
-		envId: "https://twikoo.zhuangsanmeng.xyz/",
-		lang: "zh_CN", // 设置 Twikoo 评论系统语言为英文
+		envId: "",
+		lang: "en", // Set Twikoo comment system language
 	},
 };
 
 export const announcementConfig: AnnouncementConfig = {
-	title: "Announcement", // 公告标题
-	content: "Nothing Much, hehe", // 公告内容
-	closable: false, // 允许用户关闭公告
+	title: "Announcement", // Announcement title
+	content: "Nothing Much, hehe", // Announcement content
+	closable: false, // Allow user to close announcement
 	link: {
-		enable: true, // 启用链接
-		text: "Learn More", // 链接文本
-		url: "/about/", // 链接 URL
-		external: false, // 内部链接
+		enable: true, // Enable link
+		text: "Learn More", // Link text
+		url: "/about/", // Link URL
+		external: false, // Internal link
 	},
 };
 
 export const footerConfig: FooterConfig = {
-	enable: true, // 是否启用Footer HTML注入功能
+	enable: true, // Enable footer HTML injection
 };
 
-// 直接编辑 FooterConfig.html 文件来添加备案号等自定义内容
+// Edit FooterConfig.html to add custom footer content
 
 /**
- * 侧边栏布局配置
- * 用于控制侧边栏组件的显示、排序、动画和响应式行为
+ * Sidebar layout configuration
+ * Controls sidebar component display, ordering, animation, and responsive behavior
  */
 export const sidebarLayoutConfig: SidebarLayoutConfig = {
-	// 是否启用侧边栏功能
+	// Enable sidebar
 	enable: true,
 
-	// 侧边栏位置：左侧或右侧
+	// Sidebar position: left or right
 	position: "left",
 
-	// 侧边栏组件配置列表
+	// Sidebar component configuration list
 	components: [
 		{
-			// 组件类型：用户资料组件
+			// Component type: user profile
 			type: "profile",
-			// 是否启用该组件
+			// Enable this component
 			enable: true,
-			// 组件显示顺序（数字越小越靠前）
+			// Display order (lower number = higher priority)
 			order: 1,
-			// 组件位置："top" 表示固定在顶部
+			// Component position: "top" = fixed at top
 			position: "top",
-			// CSS 类名，用于应用样式和动画
+			// CSS class for styling and animation
 			class: "onload-animation",
-			// 动画延迟时间（毫秒），用于错开动画效果
+			// Animation delay (ms), for staggered animation
 			animationDelay: 0,
 		},
 		{
-			// 组件类型：公告组件
+			// Component type: announcement
 			type: "announcement",
-			// 是否启用该组件（现在通过统一配置控制）
+			// Enable this component (controlled via unified config)
 			enable: true,
-			// 组件显示顺序
+			// Display order
 			order: 2,
-			// 组件位置："top" 表示固定在顶部
+			// Component position: "top" = fixed at top
 			position: "top",
-			// CSS 类名
+			// CSS class
 			class: "onload-animation",
-			// 动画延迟时间
+			// Animation delay
 			animationDelay: 50,
 		},
 		{
-			// 组件类型：分类组件
+			// Component type: categories
 			type: "categories",
-			// 是否启用该组件
+			// Enable this component
 			enable: true,
-			// 组件显示顺序
+			// Display order
 			order: 3,
-			// 组件位置："sticky" 表示粘性定位，可滚动
+			// Component position: "sticky" = sticky positioning, scrollable
 			position: "sticky",
-			// CSS 类名
+			// CSS class
 			class: "onload-animation",
-			// 动画延迟时间
+			// Animation delay
 			animationDelay: 150,
-			// 响应式配置
+			// Responsive config
 			responsive: {
-				// 折叠阈值：当分类数量超过5个时自动折叠
+				// Collapse threshold: auto-collapse when category count exceeds 5
 				collapseThreshold: 5,
 			},
 		},
 		{
-			// 组件类型：标签组件
+			// Component type: tags
 			type: "tags",
-			// 是否启用该组件
+			// Enable this component
 			enable: true,
-			// 组件显示顺序
+			// Display order
 			order: 5,
-			// 组件位置："sticky" 表示粘性定位
+			// Component position: "sticky"
 			position: "sticky",
-			// CSS 类名
+			// CSS class
 			class: "onload-animation",
-			// 动画延迟时间
+			// Animation delay
 			animationDelay: 250,
-			// 响应式配置
+			// Responsive config
 			responsive: {
-				// 折叠阈值：当标签数量超过20个时自动折叠
+				// Collapse threshold: auto-collapse when tag count exceeds 20
 				collapseThreshold: 20,
 			},
 		},
 	],
 
-	// 默认动画配置
+	// Default animation config
 	defaultAnimation: {
-		// 是否启用默认动画
+		// Enable default animation
 		enable: true,
-		// 基础延迟时间（毫秒）
+		// Base delay (ms)
 		baseDelay: 0,
-		// 递增延迟时间（毫秒），每个组件依次增加的延迟
+		// Increment delay (ms), added to each successive component
 		increment: 50,
 	},
 
-	// 响应式布局配置
+	// Responsive layout config
 	responsive: {
-		// 断点配置（像素值）
+		// Breakpoint config (pixels)
 		breakpoints: {
-			// 移动端断点：屏幕宽度小于768px
+			// Mobile breakpoint: screen width < 768px
 			mobile: 768,
-			// 平板端断点：屏幕宽度小于1024px
+			// Tablet breakpoint: screen width < 1024px
 			tablet: 1024,
-			// 桌面端断点：屏幕宽度小于1280px
+			// Desktop breakpoint: screen width < 1280px
 			desktop: 1280,
 		},
-		// 不同设备的布局模式
-		//hidden:不显示侧边栏(桌面端)   drawer:抽屉模式(移动端不显示)   sidebar:显示侧边栏
+		// Layout modes for different devices
+		// hidden: hide sidebar (desktop)  drawer: drawer mode (hidden on mobile)  sidebar: show sidebar
 		layout: {
-			// 移动端：抽屉模式
+			// Mobile: sidebar mode
 			mobile: "sidebar",
-			// 平板端：显示侧边栏
+			// Tablet: sidebar mode
 			tablet: "sidebar",
-			// 桌面端：显示侧边栏
+			// Desktop: sidebar mode
 			desktop: "sidebar",
 		},
 	},
 };
 
-// 导出所有配置的统一接口
+// Unified export interface for all configs
 export const widgetConfigs = {
 	profile: profileConfig,
 	announcement: announcementConfig,
@@ -342,10 +336,10 @@ export const widgetConfigs = {
 } as const;
 
 export const umamiConfig = {
-	enabled: false, // 是否显示Umami统计
-	apiKey: "", // 你的API密钥
-	baseUrl: "https://api.umami.is", // Umami Cloud API地址
+	enabled: false, // Show Umami analytics
+	apiKey: "", // Your API key
+	baseUrl: "https://api.umami.is", // Umami Cloud API address
 	scripts: `
 <script defer src="https://cloud.umami.is/script.js" data-website-id=""></script>
-  `.trim(), // 上面填你要插入的Script,不用再去Layout中插入
+  `.trim(), // Script to inject (no need to add in Layout separately)
 } as const;

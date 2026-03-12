@@ -3,18 +3,18 @@ import I18nKey from "../i18n/i18nKey";
 import { i18n } from "../i18n/translation";
 import MainGridLayout from "../layouts/MainGridLayout.astro";
 
-// 示例即刻短文数据
+// Example instant/moment short text data
 const moments = [
 	{
 		id: 1,
 		content:
 			"The falling speed of cherry blossoms is five centimeters per second!",
 		date: "2025-01-15T10:30:00Z",
-		images: ["/images/diary/sakura.jpg", "/images/diary/1.jpg"],
+		images: ["/images/diary/sakura.jpg", "/images/images/hoho.jpg"],
 	},
 ];
 
-// 时间格式化函数
+// Time formatting function
 function formatTime(dateString: string): string {
 	const now = new Date();
 	const date = new Date(dateString);
@@ -26,7 +26,7 @@ function formatTime(dateString: string): string {
 		return `${diffInMinutes}${i18n(I18nKey.diaryMinutesAgo)}`;
 	}
 	if (diffInMinutes < 1440) {
-		// 24小时
+		// 24 hours
 		const hours = Math.floor(diffInMinutes / 60);
 		return `${hours}${i18n(I18nKey.diaryHoursAgo)}`;
 	}
@@ -35,11 +35,11 @@ function formatTime(dateString: string): string {
 }
 ---
 
-<MainGridLayout title={i18n(I18nKey.diary)} description="即刻短文">
+<MainGridLayout title={i18n(I18nKey.diary)} description="My short texts and thoughts">
 	<div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32">
 		<div class="card-base z-10 px-4 py-4 md:px-6 md:py-5 relative w-full">
 			<div class="relative max-w-4xl">
-				<!-- 页面头部 -->
+				<!-- Page Header -->
 				<div class="moments-header mb-6">
 					<div class="header-content">
 						<div class="header-info">
@@ -55,7 +55,7 @@ function formatTime(dateString: string): string {
 					</div>
 				</div>
 
-				<!-- 短文列表 -->
+				<!-- Moment List -->
 				<div class="moments-timeline">
 					<div class="timeline-list space-y-4">
 					{moments.map(moment => (
@@ -95,7 +95,7 @@ function formatTime(dateString: string): string {
 					</div>
 				</div>
 
-				<!-- 底部提示 -->
+				<!-- Bottom Tip -->
 				<div class="moments-tips text-center mt-6 md:mt-8 lg:mt-10 text-75 text-xs md:text-sm lg:text-base italic">
 					{i18n(I18nKey.diaryTips)}
 				</div>
@@ -164,8 +164,8 @@ function formatTime(dateString: string): string {
 		color: var(--primary);
 	}
 	
-	/* 响应式设计 */
-	/* 手机端 (小于640px) */
+	/* Responsive Design */
+	/* Mobile (less than 640px) */
 	@media (max-width: 640px) {
 		.moments-header {
 			padding: 0.75rem;
@@ -188,7 +188,7 @@ function formatTime(dateString: string): string {
 		}
 	}
 	
-	/* 平板竖屏 (641px - 900px) - 优化显示 */
+	/* Tablet Portrait (641px - 900px) - Optimized Display */
 	@media (min-width: 641px) and (max-width: 900px) {
 		.moments-header {
 			padding: 1.25rem;
@@ -220,7 +220,7 @@ function formatTime(dateString: string): string {
 		}
 	}
 	
-	/* 平板横屏和桌面端 (大于900px) */
+	/* Tablet Landscape and Desktop (greater than 900px) */
 	@media (min-width: 901px) {
 		.moments-header {
 			padding: 1.5rem;
@@ -242,7 +242,7 @@ function formatTime(dateString: string): string {
 		}
 	}
 	
-	/* 优化小屏幕显示 */
+	/* Optimize for small screens */
 	@media (max-width: 480px) {
 		.card-base {
 			margin: 0 -0.5rem;

@@ -29,7 +29,7 @@ if (!album) {
   <div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32">
     <div class="card-base z-10 px-9 py-6 relative w-full">
       
-      <!-- 返回按钮 -->
+      <!-- Back button -->
       <div class="mb-6">
         <a 
           href="/albums/" 
@@ -42,7 +42,7 @@ if (!album) {
         </a>
       </div>
 
-      <!-- 相册标题信息 -->
+      <!-- Album title information -->
       <header class="mb-8">
         <h1 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-3">
           {album.title}
@@ -54,10 +54,10 @@ if (!album) {
           </p>
         )}
         
-        <!-- 相册元数据 -->
+        <!-- Album metadata -->
         <div class="flex flex-wrap items-center gap-4 text-sm text-neutral-500 dark:text-neutral-500">
           <span>{album.photos.length} {album.photos.length > 1 ? i18n(I18nKey.albumsPhotosCount) : i18n(I18nKey.albumsPhotoCount)}</span>
-          <time>{new Date(album.date).toLocaleDateString('zh-CN')}</time>
+          <time>{new Date(album.date).toLocaleDateString('en-US')}</time>
           {album.location && (
             <span class="flex items-center gap-1">
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -68,7 +68,7 @@ if (!album) {
           )}
         </div>
         
-        <!-- 标签 -->
+        <!-- Tags -->
         {album.tags && album.tags.length > 0 && (
           <div class="flex flex-wrap gap-2 mt-4">
             {album.tags.map(tag => (
@@ -80,7 +80,7 @@ if (!album) {
         )}
       </header>
 
-      <!-- 照片网格 -->
+      <!-- Photo grid -->
       <div 
         class={`photo-gallery moment-images ${album.layout === 'masonry' ? 'masonry-layout' : 'grid-layout'}`}
         data-layout={album.layout || 'grid'}
@@ -111,13 +111,13 @@ if (!album) {
 </MainGridLayout>
 
 <script>
-  // 确保Fancybox正确处理相册图片
+  // Ensure Fancybox correctly handles album images
   document.addEventListener('DOMContentLoaded', () => {
-    console.log('=== 相册页面加载完成 ===');
+    console.log('=== Album page loaded ===');
     
     // 检查页面中的图片元素
     const albumImages = document.querySelectorAll('.moment-images img, .photo-gallery img');
-    console.log('相册图片数量:', albumImages.length);
+    console.log('Number of album photos:', albumImages.length);
     
     // 预加载图片以确保正确显示
     albumImages.forEach((img) => {
