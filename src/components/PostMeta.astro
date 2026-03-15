@@ -108,7 +108,7 @@ const {
 
 <!-- Only load script on non-home pages with umami enabled and slug present -->
 {!isHome && umamiEnabled && slug && (
-    <script define:vars={{ slug, umamiBaseUrl, umamiApiKey, umamiWebsiteId, umamiConfig }}>
+    <script define:vars={{ slug, umamiBaseUrl, umamiApiKey, umamiWebsiteId, umamiEnabled: umamiConfig.enabled }}>
         // Client-side stats text generator function
         function generateStatsText(pageViews, visitors) {
             return `Views: ${pageViews} · Visitors: ${visitors}`;
@@ -116,7 +116,7 @@ const {
         
         // 获取访问量统计
         async function fetchPageViews(isRetry = false) {
-            if (!umamiConfig.enabled) {
+            if (!umamiEnabled) {
                 return;
             }
             

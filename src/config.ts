@@ -338,7 +338,7 @@ export const widgetConfigs = {
 export const umamiConfig = {
 	enabled: true, // Show Umami analytics
 	apiKey: "api_9iRC6eIa05JeKDfsJFJ2W849NxfKncor", // Your API key
-	baseUrl: "https://api.umami.is", // Umami Cloud API address
+	baseUrl: "https://cloud.umami.is", // Umami Cloud API address
 	scripts: `
 <script defer src="https://cloud.umami.is/script.js" data-website-id="1a183553-5164-4b6c-92c1-235d8fef1aaf"></script>
   `.trim(), // Script to inject (no need to add in Layout separately)

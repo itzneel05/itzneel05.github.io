@@ -51,11 +51,17 @@ const umamiBaseUrl = umamiConfig.baseUrl || "";
 </div>
 
 {umamiEnabled && (
-    <script define:vars={{ umamiBaseUrl, umamiApiKey, umamiWebsiteId, umamiConfig }}>
+<script define:vars={{ umamiBaseUrl, umamiApiKey, umamiWebsiteId, umamiEnabled: umamiConfig.enabled }}>
         // Client-side stats text generator function
         function generateStatsText(pageViews, visits) {
             return `Views: ${pageViews} · Visits: ${visits}`;
         }
+        
+        // 获取访问量统计
+        async function fetchSiteStats(isRetry = false) {
+            if (!umamiEnabled) {
+                return;
+            }
         
         // 获取访问量统计
         async function fetchSiteStats(isRetry = false) {
