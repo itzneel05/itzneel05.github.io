@@ -58,6 +58,8 @@ const lastModified = dayjs(entry.data.updated || entry.data.published)
 	.utc()
 	.format("YYYY-MM-DDTHH:mm:ss");
 
+const isOutdated = dayjs().diff(dayjs(entry.data.updated || entry.data.published), 'month') >= 6;
+
 const jsonLd = {
 	"@context": "https://schema.org",
 	"@type": "BlogPosting",
@@ -220,7 +222,7 @@ const jsonLd = {
     <!-- 评论 -->
     <Comment post={entry} />
 
-    {siteConfig.showLastModified && (
+    {siteConfig.showLastModified && isOutdated && (
         <>
             <div 
                 id="last-modified" 

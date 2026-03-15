@@ -91,7 +91,7 @@ export const siteConfig: SiteConfig = {
 		enable: true, // Enable table of contents
 		depth: 3, // TOC depth, 1-6. 1 = only h1, 2 = h1 and h2, etc.
 	},
-	generateOgImages: false, // Enable OpenGraph image generation. Note: takes a long time to render, not recommended during local dev
+	generateOgImages: true, // Enable OpenGraph image generation. Note: takes a long time to render, not recommended during local dev
 	favicon: [
 		// Leave empty to use default favicon
 		// {

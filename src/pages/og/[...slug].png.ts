@@ -218,24 +218,28 @@ export async function GET({
 									],
 								},
 							},
-							description && {
-								type: "div",
-								props: {
-									style: {
-										fontSize: "32px",
-										lineHeight: 1.5,
-										color: subtleTextColor,
-										paddingLeft: "35px",
-										display: "-webkit-box",
-										overflow: "hidden",
-										textOverflow: "ellipsis",
-										lineClamp: 2,
-										WebkitLineClamp: 2,
-										WebkitBoxOrient: "vertical",
-									},
-									children: description,
-								},
-							},
+							...(description
+								? [
+										{
+											type: "div",
+											props: {
+												style: {
+													fontSize: "32px",
+													lineHeight: 1.5,
+													color: subtleTextColor,
+													paddingLeft: "35px",
+													display: "-webkit-box",
+													overflow: "hidden",
+													textOverflow: "ellipsis",
+													lineClamp: 2,
+													WebkitLineClamp: 2,
+													WebkitBoxOrient: "vertical",
+												},
+												children: description,
+											},
+										},
+									]
+								: []),
 						],
 					},
 				},
@@ -313,7 +317,7 @@ export async function GET({
 		});
 	}
 
-	const svg = await satori(template, {
+	const svg = await satori(template as any, {
 		width: 1200,
 		height: 630,
 		fonts,
