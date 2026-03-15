@@ -121,11 +121,16 @@ const {
             }
             
             try {
-                // 构造文章页面的URL路径
-                const pageUrl = `/posts/${slug}/`;
+                // Get the current path without the trailing slash for better matching
+                let currentPath = window.location.pathname;
+                if (currentPath.endsWith('/') && currentPath.length > 1) {
+                    currentPath = currentPath.slice(0, -1);
+                }
+                
+                console.log(`[Umami] Fetching stats for: ${currentPath}`);
                 
                 // 调用全局工具获取特定页面的 Umami 统计数据
-                const stats = await getUmamiPageStats(umamiBaseUrl, umamiApiKey, umamiWebsiteId, pageUrl);
+                const stats = await getUmamiPageStats(umamiBaseUrl, umamiApiKey, umamiWebsiteId, currentPath);
                 
                 // 从返回的数据中提取页面浏览量和访客数
                 const pageViews = stats.pageviews || 0;
@@ -136,7 +141,7 @@ const {
                     displayElement.textContent = generateStatsText(pageViews, visitors);
                 }
             } catch (error) {
-                console.error('Error fetching page views:', error);
+                console.error('[Umami] Error fetching page views:', error);
                 const displayElement = document.getElementById('page-views-display');
                 if (displayElement) {
                     displayElement.textContent = 'Stats unavailable';
