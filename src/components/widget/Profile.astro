@@ -51,21 +51,21 @@ const umamiBaseUrl = umamiConfig.baseUrl || "";
 </div>
 
 {umamiEnabled && (
-<script define:vars={{ umamiBaseUrl, umamiApiKey, umamiWebsiteId, umamiEnabled: umamiConfig.enabled }}>
+    <script define:vars={{ umamiBaseUrl, umamiApiKey, umamiWebsiteId, umamiEnabled }}>
         // Client-side stats text generator function
         function generateStatsText(pageViews, visits) {
             return `Views: ${pageViews} · Visits: ${visits}`;
         }
         
         // 获取访问量统计
-        async function fetchSiteStats(isRetry = false) {
+        async function fetchSiteStats() {
             if (!umamiEnabled) {
                 return;
             }
         
         // 获取访问量统计
         async function fetchSiteStats(isRetry = false) {
-            if (!umamiConfig.enabled) {
+            if (!umamiEnabled) {
                 return;
             }
             

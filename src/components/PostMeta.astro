@@ -107,15 +107,24 @@ const {
 </div>
 
 <!-- Only load script on non-home pages with umami enabled and slug present -->
+const umamiEnabledVar = umamiConfig.enabled;
+
+// ... (props stuff)
+---
+
+
+<div class:list={["flex flex-wrap text-neutral-500 dark:text-neutral-400 items-center gap-4 gap-x-4 gap-y-2", className]}>
+... (rest of file)
+...
 {!isHome && umamiEnabled && slug && (
-    <script define:vars={{ slug, umamiBaseUrl, umamiApiKey, umamiWebsiteId, umamiEnabled: umamiConfig.enabled }}>
+    <script define:vars={{ slug, umamiBaseUrl, umamiApiKey, umamiWebsiteId, umamiEnabled }}>
         // Client-side stats text generator function
         function generateStatsText(pageViews, visitors) {
             return `Views: ${pageViews} · Visitors: ${visitors}`;
         }
         
         // 获取访问量统计
-        async function fetchPageViews(isRetry = false) {
+        async function fetchPageViews() {
             if (!umamiEnabled) {
                 return;
             }
