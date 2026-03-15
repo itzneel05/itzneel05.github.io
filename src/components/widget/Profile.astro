@@ -3,15 +3,8 @@ import { Icon } from "astro-icon/components";
 import { profileConfig } from "../../config";
 import { url } from "../../utils/url-utils";
 import ImageWrapper from "../misc/ImageWrapper.astro";
-
-import { umamiConfig } from '../../config';
-
-// 解析 umami
-const umamiEnabled = umamiConfig.enabled || false;
-const umamiWebsiteId = umamiConfig.scripts.match(/data-website-id="([^"]+)"/)?.[1] || "";
-const umamiApiKey = umamiConfig.apiKey || "";
-const umamiBaseUrl = umamiConfig.baseUrl || "";
 ---
+
 
 <div class="card-base p-3">
     <a aria-label="Go to About Page" href={url('/about/')}
@@ -41,61 +34,5 @@ const umamiBaseUrl = umamiConfig.baseUrl || "";
                 {profileConfig.links[0].name}
             </a>}
         </div>
-        {umamiEnabled && (
-            <div class="text-sm text-gray-500 mt-2 text-center">
-                <Icon name="fa6-solid:eye" class="inline-block mr-1 text-gray-400 text-sm align-middle" />
-                <span id="site-stats-display">Loading stats...</span>
-            </div>
-        )}
     </div>
 </div>
-
-{umamiEnabled && (
-    <script define:vars={{ umamiBaseUrl, umamiApiKey, umamiWebsiteId, umamiEnabled }}>
-        // Client-side stats text generator function
-        function generateStatsText(pageViews, visits) {
-            return `Views: ${pageViews} · Visits: ${visits}`;
-        }
-        
-        // 获取访问量统计
-        async function fetchSiteStats() {
-            if (!umamiEnabled) {
-                return;
-            }
-        
-        // 获取访问量统计
-        async function fetchSiteStats(isRetry = false) {
-            if (!umamiEnabled) {
-                return;
-            }
-            
-            try {
-                console.log('[Umami] Fetching global site stats...');
-                // 调用全局工具获取 Umami 统计数据
-                const stats = await getUmamiWebsiteStats(umamiBaseUrl, umamiApiKey, umamiWebsiteId);
-                
-                // 从返回的数据中提取页面浏览量和访客数
-                const pageViews = stats.pageviews || 0;
-                const visits = stats.visits || 0;
-                
-                const displayElement = document.getElementById('site-stats-display');
-                if (displayElement) {
-                    displayElement.textContent = generateStatsText(pageViews, visits);
-                }
-            } catch (error) {
-                console.error('[Umami] Error fetching site stats:', error);
-                const displayElement = document.getElementById('site-stats-display');
-                if (displayElement) {
-                    displayElement.textContent = 'Stats unavailable';
-                }
-            }
-        }
-
-        // 页面加载完成后获取统计数据
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', fetchSiteStats);
-        } else {
-            fetchSiteStats();
-        }
-    </script>
-)}
