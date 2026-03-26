@@ -814,8 +814,8 @@ const setup = () => {
 		});
 		
 		// Sync theme status - fix code block rendering when navigating from homepage to post page
-		const storedTheme = localStorage.getItem('theme') || 'LIGHT_MODE';
-		const isDark = storedTheme === 'DARK_MODE';
+		const storedTheme = getStoredTheme();
+		const isDark = storedTheme === DARK_MODE;
 		const expectedTheme = isDark ? 'github-dark' : 'github-light';
 		const currentTheme = document.documentElement.getAttribute('data-theme');
 		
