@@ -1,7 +1,7 @@
 ---
 title: "TryHackMe Jr Penetration Tester & Web Fundamentals Path — Completed"
 published: 2026-04-01
-tags: ["tryhackme", "cybersecurity", "penetration testing", "web security", "learning"]
+tags: ["tryhackme", "certificate", "penetration testing", "web security", "learning"]
 description: "My experience completing the Jr Penetration Tester and Web Fundamentals learning paths on TryHackMe - a fully practical journey."
 category: Learning
 ---
@@ -31,7 +31,7 @@ If you're looking to build actual skills that you can use, I can't recommend the
 Here are the certificates for completing the paths:
 
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin: 2rem 0;">
-  <!-- Replace these with your actual certificate screenshot paths -->
+  
   <img src="/assets/images/posts/JrPT_THM-VDSYEQTC8H.jpg" alt="TryHackMe Jr Penetration Tester Certificate" style="width: 100%; height: auto;" />
   <img src="/assets/images/posts/WebF_THM-AZSD1RL5JV.jpg" alt="TryHackMe Web Fundamentals Certificate" style="width: 100%; height: auto;" />
 </div>

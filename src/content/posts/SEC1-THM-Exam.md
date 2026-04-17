@@ -1,7 +1,7 @@
 ---
 title: "TryHackMe SEC1 Exam Writeup - 690/700"
 published: 2026-03-26
-tags: ["tryhackme", "certification", "cybersecurity", "sec1", "exam"]
+tags: ["tryhackme", "certificate", "cybersecurity", "sec1", "exam"]
 description: "My experience completing the TryHackMe SEC1 exam with a score of 690/700 after finishing the CS101 learning path"
 category: Learning
 ---

@@ -2,7 +2,7 @@
 title: "TryHackMe Pre-Security Path — Completed"
 published: 2026-03-15
 description: "My journey completing the TryHackMe Pre-Security path and what I learned."
-tags: [TryHackMe, Pre-Security, Beginner, Certificate]
+tags: [tryhackme, pre-security, beginner, certificate]
 category: Learning
 ---
 
