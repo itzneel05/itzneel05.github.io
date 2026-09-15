@@ -159,7 +159,7 @@ export const navBarConfig: NavBarConfig = {
 export const profileConfig: ProfileConfig = {
 	avatar: "assets/images/duck.gif", // Relative to /src directory. If starts with '/', relative to /public directory
 	name: "Neel Ijner",
-	bio: "CS Student - Bug Finder",
+	bio: "CS Student - CTF Player - Bug Finder",
 	links: [
 		{
 			name: "GitHub",
@@ -196,7 +196,7 @@ export const commentConfig: CommentConfig = {
 
 export const announcementConfig: AnnouncementConfig = {
 	title: "Announcement", // Announcement title
-	content: "Nothing Much, hehe", // Announcement content
+	content: "Check out new writeups!", // Announcement content
 	closable: false, // Allow user to close announcement
 	link: {
 		enable: true, // Enable link
@@ -288,7 +288,7 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 			// Responsive config
 			responsive: {
 				// Collapse threshold: auto-collapse when tag count exceeds 20
-				collapseThreshold: 20,
+				collapseThreshold: 10,
 			},
 		},
 	],
