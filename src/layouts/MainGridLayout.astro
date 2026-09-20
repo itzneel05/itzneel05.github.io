@@ -206,7 +206,6 @@ const stickyComponents = widgetManager.getComponentsByPosition("sticky");
 <!-- Banner -->
 {siteConfig.banner.enable && <div id="banner-wrapper" class={`absolute z-10 w-full transition duration-700 overflow-hidden ${mobileNonHomeBannerClass}`} style={`top: -${BANNER_HEIGHT_EXTEND}vh`}>
     {(bannerImages.desktop && Array.isArray(bannerImages.desktop) && bannerImages.desktop.length > 1) || (bannerImages.mobile && Array.isArray(bannerImages.mobile) && bannerImages.mobile.length > 1) ? (
-        <!-- Carousel mode for multiple images -->
         <div id="banner-carousel" class="relative h-full w-full">
             <ul class="carousel-list h-full w-full">
                 {Math.max(
@@ -251,16 +250,13 @@ const stickyComponents = widgetManager.getComponentsByPosition("sticky");
             </ul>
         </div>
     ) : (
-        <!-- Single image mode -->
             <div class="relative h-full w-full">
-                <!-- Mobile: use mobile-specific image with same logic as desktop -->
                 <ImageWrapper 
                     alt="Mobile banner image of the blog" 
                     class:list={["block lg:hidden object-cover h-full w-full transition duration-700 opacity-100"]}
                     src={(Array.isArray(bannerImages.mobile) ? bannerImages.mobile[0] : (typeof bannerImages.mobile === 'string' ? bannerImages.mobile : '')) || (Array.isArray(bannerImages.desktop) ? bannerImages.desktop[0] : (typeof bannerImages.desktop === 'string' ? bannerImages.desktop : '')) || ''} 
                     position={siteConfig.banner.position}
                 />
-                <!-- Desktop: use desktop-specific image -->
                 <ImageWrapper 
                     id="banner" 
                     alt="Desktop banner image of the blog" 
@@ -362,13 +358,11 @@ const stickyComponents = widgetManager.getComponentsByPosition("sticky");
         >
             <!-- Banner image credit -->
             {hasBannerCredit && <a href={siteConfig.banner.credit.url} id="banner-credit" target="_blank" rel="noopener" aria-label="Visit image source"
-                                   class:list={["group onload-animation transition-all absolute flex justify-center items-center rounded-full " +
-                                   "px-3 right-4 -top-[3.25rem] bg-black/60 hover:bg-black/70 h-9", {"hover:pr-9 active:bg-black/80": hasBannerLink}]}
+                                   class={`group onload-animation transition-all absolute flex justify-center items-center rounded-full px-3 right-4 -top-[3.25rem] bg-black/60 hover:bg-black/70 h-9 ${hasBannerLink ? "hover:pr-9 active:bg-black/80" : ""}`}
             >
                 <Icon class="text-white/75 text-[1.25rem] mr-1" name="material-symbols:copyright-outline-rounded" ></Icon>
                 <div class="text-white/75 text-xs">{siteConfig.banner.credit.text}</div>
-                <Icon class:list={["transition absolute text-[oklch(0.75_0.14_var(--hue))] right-4 text-[0.75rem] opacity-0",
-                    {"group-hover:opacity-100": hasBannerLink}]}
+                <Icon class={`transition absolute text-[oklch(0.75_0.14_var(--hue))] right-4 text-[0.75rem] opacity-0 ${hasBannerLink ? "group-hover:opacity-100" : ""}`}
                       name="fa6-solid:arrow-up-right-from-square">
                 </Icon>
             </a>}
@@ -400,9 +394,7 @@ const stickyComponents = widgetManager.getComponentsByPosition("sticky");
 <div class="absolute w-full z-0 hidden xl:block">
     <div class="relative max-w-[var(--page-width)] mx-auto">
         <!-- TOC component -->
-        {siteConfig.toc.enable && <div id="toc-wrapper" class:list={["hidden lg:block transition absolute top-0 w-[var(--toc-width)] items-center",
-            sidebarLayoutConfig.position === "right" ? "-left-[var(--toc-width)]" : "-right-[var(--toc-width)]",
-            {"toc-hide": siteConfig.banner.enable}]}
+        {siteConfig.toc.enable && <div id="toc-wrapper" class={`hidden lg:block transition absolute top-0 w-[var(--toc-width)] items-center ${sidebarLayoutConfig.position === "right" ? "-left-[var(--toc-width)]" : "-right-[var(--toc-width)]"} ${siteConfig.banner.enable ? "toc-hide" : ""}`}
         >
             <div id="toc-inner-wrapper" class="fixed top-14 w-[var(--toc-width)] h-[calc(100vh_-_20rem)] overflow-y-scroll overflow-x-hidden hide-scrollbar">
                 <div id="toc" class="w-full h-full transition-swup-fade ">       
@@ -1161,4 +1153,4 @@ const stickyComponents = widgetManager.getComponentsByPosition("sticky");
         min-height: 30px !important;
         max-height: 40px !important;
     }
-}
+}</style>

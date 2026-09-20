@@ -1,8 +1,9 @@
-import { defineCollection, z } from "astro:content";
-import { processCodeBlocks } from '../lib/shiki/process';
-import { renderWithCache } from '../lib/shiki/renderer';
+import { defineCollection } from "astro:content";
+import { glob } from "astro/loaders";
+import { z } from "astro/zod";
 
 const postsCollection = defineCollection({
+	loader: glob({ pattern: "**/*.md", base: "./src/content/posts" }),
 	schema: z.object({
 		title: z.string(),
 		published: z.date(),
@@ -18,30 +19,16 @@ const postsCollection = defineCollection({
 		sourceLink: z.string().optional().default(""),
 		licenseName: z.string().optional().default(""),
 		licenseUrl: z.string().optional().default(""),
-
-		/* Page encryption fields */
 		encrypted: z.boolean().optional().default(false),
 		password: z.string().optional().default(""),
-
-
-
-		/* For internal use */
 		prevTitle: z.string().default(""),
 		prevSlug: z.string().default(""),
 		nextTitle: z.string().default(""),
 		nextSlug: z.string().default(""),
 	}),
-	// @ts-ignore
-	transform: async (entry) => {
-		if (!entry.body) return entry;
-		const newBody = await processCodeBlocks(entry.body, renderWithCache);
-		return {
-			...entry,
-			body: newBody,
-		};
-	},
 });
 const specCollection = defineCollection({
+	loader: glob({ pattern: "**/*.md", base: "./src/content/spec" }),
 	schema: z.object({}),
 });
 export const collections = {

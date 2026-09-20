@@ -9,6 +9,7 @@ import { i18n } from "@i18n/translation";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
 import { getSortedPosts } from "@utils/content-utils";
 import { getDir, getPostUrlBySlug } from "@utils/url-utils";
+import { render } from "astro:content";
 import { Icon } from "astro-icon/components";
 import bcryptjs from "bcryptjs";
 import CryptoJS from "crypto-js";
@@ -22,15 +23,13 @@ import { formatDateToYYYYMMDD } from "../../utils/date-utils";
 export async function getStaticPaths() {
 	const blogEntries = await getSortedPosts();
 	return blogEntries.map((entry) => ({
-		params: { slug: entry.slug },
+		params: { slug: entry.id },
 		props: { entry },
 	}));
 }
 
 const { entry } = Astro.props;
-const { Content, headings } = await entry.render();
-
-const { remarkPluginFrontmatter } = await entry.render();
+const { Content, headings, remarkPluginFrontmatter } = await render(entry);
 
 // 处理加密逻辑
 let encryptedContent = "";
@@ -40,7 +39,7 @@ let isEncrypted = entry.data.encrypted && entry.data.password;
 if (isEncrypted) {
 	// 对于加密文章，我们将使用内容进行加密
 	// 在客户端解密后，会通过JavaScript重新渲染
-	const contentToEncrypt = entry.body;
+	const contentToEncrypt = entry.body ?? "";
 
 	// 使用AES加密内容
 	encryptedContent = CryptoJS.AES.encrypt(
@@ -85,7 +84,7 @@ const jsonLd = {
     description={entry.data.description}
     lang={entry.data.lang}
     setOGTypeArticle={true}
-    postSlug={entry.slug}
+    postSlug={entry.id}
     headings={headings}
 >
     <script
@@ -165,7 +164,7 @@ const jsonLd = {
                     updated={entry.data.updated}
                     tags={entry.data.tags}
                     category={entry.data.category}
-                    slug={entry.slug}
+                    slug={entry.id}
                 />
                 {
                     !entry.data.image && (
@@ -204,7 +203,7 @@ const jsonLd = {
                         {licenseConfig.enable && (
                             <License
                                 title={entry.data.title}
-                                slug={entry.slug}
+                                slug={entry.id}
                                 pubDate={entry.data.published}
                                 author={entry.data.author}
                                 sourceLink={entry.data.sourceLink}

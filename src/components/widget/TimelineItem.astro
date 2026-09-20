@@ -166,7 +166,6 @@ const itemColor = item.color || "var(--color-default-blue)";
 ---
 
 {layout === 'timeline' ? (
-  <!-- 时间线布局 -->
   <div class="relative flex items-start gap-6">
     <!-- 时间线节点 -->
     {showTimeline && (
@@ -274,7 +273,6 @@ const itemColor = item.color || "var(--color-default-blue)";
     </div>
   </div>
 ) : (
-  <!-- 卡片布局 -->
   <div class="bg-white dark:bg-gray-800 rounded-[var(--radius-large)] border border-black/10 dark:border-white/10 hover:shadow-lg transition-shadow duration-300">
     <div class={sizeClasses.container}>
       <!-- 图标和标题 -->

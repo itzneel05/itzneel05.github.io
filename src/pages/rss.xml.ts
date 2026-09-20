@@ -1,7 +1,5 @@
 import { getImage } from "astro:assets";
 import { getCollection } from "astro:content";
-import type { RSSFeedItem } from "@astrojs/rss";
-import rss from "@astrojs/rss";
 import type { APIContext, ImageMetadata } from "astro";
 import MarkdownIt from "markdown-it";
 import { parse as htmlParser } from "node-html-parser";
@@ -16,6 +14,15 @@ const imagesGlob = import.meta.glob<{ default: ImageMetadata }>(
 	"/src/content/**/*.{jpeg,jpg,png,gif,webp}", // include posts and assets
 );
 
+function escapeXml(value: string): string {
+	return value
+		.replace(/&/g, "&amp;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+		.replace(/"/g, "&quot;")
+		.replace(/'/g, "&apos;");
+}
+
 export async function GET(context: APIContext) {
 	if (!context.site) {
 		throw Error("site not set");
@@ -23,11 +30,20 @@ export async function GET(context: APIContext) {
 
 	// Use the same ordering as site listing (pinned first, then by published desc)
 	const posts = (await getSortedPosts()).filter((post) => !post.data.encrypted);
-	const feed: RSSFeedItem[] = [];
+
+	let rssFeed = `<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>${escapeXml(siteConfig.title)}</title>
+    <link>${context.site.href}</link>
+    <description>${escapeXml(siteConfig.subtitle || "No description")}</description>
+    <language>${siteConfig.lang}</language>
+    <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
+    <atom:link href="${new URL("rss.xml", context.site).href}" rel="self" type="application/rss+xml"/>`;
 
 	for (const post of posts) {
 		// convert markdown to html string
-		const body = markdownParser.render(post.body);
+		const body = markdownParser.render(post.body ?? "");
 		// convert html string to DOM-like structure
 		const html = htmlParser.parse(body);
 		// hold all img tags in variable images
@@ -95,23 +111,37 @@ export async function GET(context: APIContext) {
 			}
 		}
 
-		feed.push({
-			title: post.data.title,
-			description: post.data.description,
-			pubDate: post.data.published,
-			link: `/posts/${post.slug}/`,
-			// sanitize the new html string with corrected image paths
-			content: sanitizeHtml(html.toString(), {
-				allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img"]),
-			}),
+		const postUrl = new URL(`posts/${post.id}/`, context.site).href;
+		const content = sanitizeHtml(html.toString(), {
+			allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img"]),
 		});
+
+		rssFeed += `
+    <item>
+      <title>${escapeXml(post.data.title)}</title>
+      <link>${postUrl}</link>
+      <guid isPermaLink="true">${postUrl}</guid>
+      <pubDate>${post.data.published.toUTCString()}</pubDate>
+      <description>${escapeXml(post.data.description || "")}</description>
+      <content:encoded><![CDATA[${content}]]></content:encoded>`;
+
+		// 添加分类标签
+		if (post.data.category) {
+			rssFeed += `
+      <category>${escapeXml(post.data.category)}</category>`;
+		}
+
+		rssFeed += `
+    </item>`;
 	}
 
-	return rss({
-		title: siteConfig.title,
-		description: siteConfig.subtitle || "No description",
-		site: context.site,
-		items: feed,
-		customData: `<language>${siteConfig.lang}</language>`,
+	rssFeed += `
+  </channel>
+</rss>`;
+
+	return new Response(rssFeed, {
+		headers: {
+			"Content-Type": "application/rss+xml; charset=utf-8",
+		},
 	});
 }

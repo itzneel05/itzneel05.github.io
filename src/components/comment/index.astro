@@ -7,9 +7,9 @@ interface Props {
 	post: CollectionEntry<"posts">;
 }
 
-const { id, data, slug } = Astro.props.post;
+const { id, data } = Astro.props.post;
 
-const path = `/posts/${slug}`;
+const path = `/posts/${id}`;
 const url = `${Astro.site?.href}${path}`;
 
 let commentService = "";
