@@ -32,3 +32,6 @@ yarn.lock
 .trae
 cache/
 fuwari/
+
+# local-only project knowledge base
+PROJECT_KB.md
