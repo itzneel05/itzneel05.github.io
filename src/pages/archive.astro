@@ -24,7 +24,7 @@ const groupedPostsArray = Object.keys(groups).map((yearStr) => ({
 groupedPostsArray.sort((a, b) => b.year - a.year);
 ---
 
-<MainGridLayout title={i18n(I18nKey.archive)}>
+<MainGridLayout title={i18n(I18nKey.archive)} description="Complete archive of all writeups and articles.">
     <ArchivePanel sortedPosts={sortedPostsList} initialGroups={groupedPostsArray} client:load></ArchivePanel>
 </MainGridLayout>
 

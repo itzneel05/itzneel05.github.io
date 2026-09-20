@@ -59,18 +59,31 @@ const lastModified = dayjs(entry.data.updated || entry.data.published)
 
 const isOutdated = dayjs().diff(dayjs(entry.data.updated || entry.data.published), 'month') >= 6;
 
+const postUrl = new URL(Astro.url.pathname, Astro.site).toString();
+const postImageUrl = siteConfig.generateOgImages
+	? new URL(`/og/${entry.id}.png`, Astro.site).toString()
+	: undefined;
+
 const jsonLd = {
 	"@context": "https://schema.org",
 	"@type": "BlogPosting",
+	mainEntityOfPage: {
+		"@type": "WebPage",
+		"@id": postUrl,
+	},
 	headline: entry.data.title,
 	description: entry.data.description || entry.data.title,
 	keywords: entry.data.tags,
+	url: postUrl,
+	datePublished: formatDateToYYYYMMDD(entry.data.published),
+	dateModified: formatDateToYYYYMMDD(entry.data.updated || entry.data.published),
+	...(postImageUrl ? { image: postImageUrl } : {}),
 	author: {
 		"@type": "Person",
 		name: profileConfig.name,
-		url: Astro.site,
+		url: new URL("/about/", Astro.site).toString(),
+		sameAs: profileConfig.links.map((link) => link.url),
 	},
-	datePublished: formatDateToYYYYMMDD(entry.data.published),
 	inLanguage: entry.data.lang
 		? entry.data.lang.replace("_", "-")
 		: siteConfig.lang.replace("_", "-"),
@@ -92,6 +105,29 @@ const jsonLd = {
         slot="head"
         type="application/ld+json"
         set:html={JSON.stringify(jsonLd)}
+    />
+    <script
+        is:inline
+        slot="head"
+        type="application/ld+json"
+        set:html={JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+                {
+                    "@type": "ListItem",
+                    position: 1,
+                    name: siteConfig.title,
+                    item: new URL("/", Astro.site).toString(),
+                },
+                {
+                    "@type": "ListItem",
+                    position: 2,
+                    name: entry.data.title,
+                    item: postUrl,
+                },
+            ],
+        })}
     />
     <div
         class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative mb-4"

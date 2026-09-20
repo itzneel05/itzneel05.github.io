@@ -105,7 +105,11 @@ if (title) {
 let ogImageUrl: string | undefined;
 if (siteConfig.generateOgImages && postSlug) {
 	ogImageUrl = new URL(`/og/${postSlug}.png`, Astro.site).toString();
+} else if (siteConfig.generateOgImages) {
+	ogImageUrl = new URL("/og/default.png", Astro.site).toString();
 }
+
+const siteUrl = new URL("/", Astro.site).toString().replace(/\/$/, "");
 
 const favicons: Favicon[] =
 	siteConfig.favicon.length > 0 ? siteConfig.favicon : defaultFavicons;
@@ -115,6 +119,30 @@ if (!lang) {
 	lang = `${siteConfig.lang}`;
 }
 const siteLang = lang.replace("_", "-");
+
+const websiteSchema = {
+	"@type": "WebSite",
+	"@id": `${siteUrl}/#website`,
+	url: `${siteUrl}/`,
+	name: siteConfig.title,
+	inLanguage: siteLang,
+	potentialAction: {
+		"@type": "SearchAction",
+		target: {
+			"@type": "EntryPoint",
+			urlTemplate: `${siteUrl}/?q={search_term_string}`,
+		},
+		"query-input": "required name=search_term_string",
+	},
+};
+
+const personSchema = {
+	"@type": "Person",
+	"@id": `${siteUrl}/about/#person`,
+	name: profileConfig.name,
+	url: `${siteUrl}/about/`,
+	sameAs: profileConfig.links.map((link) => link.url),
+};
 
 const bannerOffsetByPosition = {
 	top: `${BANNER_HEIGHT_EXTEND}vh`,
@@ -158,6 +186,8 @@ const umamiScripts = umamiConfig.scripts || ""; // 获取Umami scripts配置
 		)}
 		<meta name="author" content={profileConfig.name}>
 
+		<link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+
 		<meta property="og:site_name" content={siteConfig.title}>
 		<meta property="og:url" content={Astro.url}>
 		<meta property="og:title" content={pageTitle}>
@@ -170,6 +200,9 @@ const umamiScripts = umamiConfig.scripts || ""; // 获取Umami scripts配置
 				<meta property="og:type" content="website" />
 			)
 		}
+
+		<script is:inline type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+		<script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
 
 		<meta name="twitter:card" content="summary_large_image">
 		<meta property="twitter:url" content={Astro.url}>

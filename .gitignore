@@ -35,3 +35,6 @@ fuwari/
 
 # local-only project knowledge base
 PROJECT_KB.md
+
+# local-only SEO plan (never commit/deploy)
+SEO-PLAN.md
