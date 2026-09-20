@@ -30,3 +30,20 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  indexnow:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify search engines of updated URLs
+        shell: bash
+        run: |
+          sleep 30
+          KEY="ad881ed9ba9738a726b1a79679e481b6"
+          SITE="https://itzneel05.github.io"
+          URLS=$(curl -s "${SITE}/sitemap-0.xml" | grep -oP '(?<=<loc>)[^<]+' | grep -v '\.xml$')
+          if [ -z "$URLS" ]; then URLS="${SITE}/"; fi
+          for url in $URLS; do
+            echo "pinging ${url}"
+            curl -s "https://api.indexnow.org/indexnow?url=${url}&key=${KEY}" --max-time 30 || true
+          done
