@@ -109,32 +109,38 @@ const recentPosts = posts.slice(0, 6);
         copiedText: i18n(I18nKey.rssCopied), 
         copyFailedText: i18n(I18nKey.rssCopyFailed) 
     }}>
-        document.addEventListener('DOMContentLoaded', function() {
+        function setupRssCopy() {
             const copyBtn = document.getElementById('copy-rss-btn');
-            if (copyBtn) {
-                copyBtn.addEventListener('click', async function() {
-                    const url = this.getAttribute('data-url');
-                    if (!url) return;
-                    try {
-                        await navigator.clipboard.writeText(url);
-                        const originalText = this.textContent || copyLinkText;
-                        this.textContent = copiedText;
-                        this.style.backgroundColor = 'var(--color-default-green)';
-                        
-                        setTimeout(() => {
-                            this.textContent = originalText;
-                            this.style.backgroundColor = '';
-                        }, 2000);
-                    } catch (err) {
-                        console.error('Copy failed:', err);
-                        const originalText = this.textContent || copyLinkText;
-                        this.textContent = copyFailedText;
-                        setTimeout(() => {
-                            this.textContent = originalText;
-                        }, 2000);
-                    }
-                });
-            }
-        });
+            if (!copyBtn || copyBtn.dataset.copyBound) return;
+            copyBtn.dataset.copyBound = '1';
+            copyBtn.addEventListener('click', async function() {
+                const url = this.getAttribute('data-url');
+                if (!url) return;
+                try {
+                    await navigator.clipboard.writeText(url);
+                    const originalText = this.textContent || copyLinkText;
+                    this.textContent = copiedText;
+                    this.style.backgroundColor = 'var(--color-default-green)';
+                    
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                        this.style.backgroundColor = '';
+                    }, 2000);
+                } catch (err) {
+                    console.error('Copy failed:', err);
+                    const originalText = this.textContent || copyLinkText;
+                    this.textContent = copyFailedText;
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                    }, 2000);
+                }
+            });
+        }
+        setupRssCopy();
+        document.addEventListener('astro:page-load', setupRssCopy);
+        if (window.swup?.hooks) {
+            window.swup.hooks.on('page:view', setupRssCopy);
+            window.swup.hooks.on('content:replace', setupRssCopy);
+        }
     </script>
 </MainGridLayout>
