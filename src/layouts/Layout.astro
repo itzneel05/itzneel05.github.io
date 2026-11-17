@@ -294,6 +294,37 @@ const umamiScripts = umamiConfig.scripts || ""; // 获取Umami scripts配置
 	'banner-height-home': `${BANNER_HEIGHT_HOME}vh`,
 	'banner-height': `${BANNER_HEIGHT}vh`,
 }}>
+	/* --- Floating TOC: zoom / narrow viewport fix --- */
+	/* --toc-width is derived from a fixed 90rem page width. Once the CSS
+	   viewport drops below that (browser zoom), it turns negative and the
+	   TOC overlaps the post text. Clamp it, and hide it when there is no
+	   longer enough room beside the content. */
+	#toc-wrapper,
+	#toc-inner-wrapper {
+		width: max(0px, calc((100vw - var(--page-width)) / 2 - 1rem)) !important;
+	}
+	@media (max-width: 1800px) {
+		#toc-wrapper {
+			display: none !important;
+		}
+	}
+
+	/* --- Narrow / zoomed screens: wrap long flags, URLs and inline code --- */
+	.custom-md,
+	.custom-md code,
+	.custom-md pre {
+		overflow-wrap: anywhere;
+		word-break: break-word;
+	}
+	#swup-container,
+	#content-wrapper {
+		min-width: 0;
+	}
+	.custom-md img {
+		max-width: 100%;
+		height: auto;
+	}
+
 	/* BootLoader Blocking Overlay */
 	html.boot-loading::before {
 		content: "";
